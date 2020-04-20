@@ -1,0 +1,88 @@
+﻿<div class="row">
+    <div class="col-xs-12">
+        <div class="card" block-ui="card">
+            <div class="card-header">
+                <h4 class="card-title">الاعلانات</h4>
+                <div class="heading-elements">
+                    <button class="btn btn-success" data-toggle="modal" data-target="#editor-modal" ng-click="select()"><i class="icon-plus"></i>  إضافة</button>
+                </div>
+            </div>
+            <div class="card-body collapse in">
+                <div class="card-block">
+                    <div class="row" style="margin-bottom:10px;">
+                        <div class="col-xs-6">
+                            <input type="text" class="form-control" placeholder="ابحث..." ng-model="search" ng-model-options="{debounce:1000}" />
+                        </div>
+                        <div class="col-xs-6">
+                            <div page-size-options></div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table mb-0 table-fixed">
+                            <thead>
+                                <tr>
+                                    <th style="width:85px"></th>
+                                    <th>العنوان</th>
+                                    <th style="width:30%">التفاصيل</th>
+                                    <th>القسم</th>
+                                    <th>التاجر</th>
+                                    <th>مميز</th>
+                                    <th style="width:200px"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-show="!items">
+                                    <td colspan="7">
+                                        <ajax-loader></ajax-loader>
+                                    </td>
+                                </tr>
+                                <tr ng-repeat="item in items" id="item-{{item.objectId}}" block-ui="row[item.objectId]">
+                                    <td>
+                                        <div class="img-thumbnail">
+                                            <img ng-src="{{item.photo[0].url}}" />
+                                        </div>
+                                    </td>
+                                    <td ng-bind="item.title">
+                                    </td>
+                                    <td ng-bind="item.Description">
+                                    </td>
+                                    <td ng-bind="item.categories.name">
+                                    </td>
+                                    <td>
+                                        <a href="/dealers/{{item.objectId}}" ng-bind="item.dealer.name"></a>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" ng-change="changeSpecial(item)" ng-model="item.isSpecial" ng-true-value="1" ng-false-value="0" />
+                                    </td>
+                                    <td>
+                                        <div class="table-actions">
+                                            <button class="btn btn-info" ng-click="select(item)" data-toggle="modal" data-target="#details-modal"><i class="icon-eye"></i> عرض</button>
+                                            <button class="btn btn-danger" delete-btn="item" container-id="#item-{{item.objectId}}"><i class="icon-cancel-circle"></i> حذف</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <pager page="filters.page" page-size="filters.pageSize"></pager>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="details-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{selectedItem.objectId ? 'تعديل':'إضافة'}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

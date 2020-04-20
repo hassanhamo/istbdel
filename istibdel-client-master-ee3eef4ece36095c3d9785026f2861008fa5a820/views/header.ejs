@@ -1,0 +1,269 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="loading" ng-app="istibdel">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description" content="annonce anouncement بيع شراء">
+    <meta name="keywords" content="annonce anouncement بيع شراء">
+    <meta name="author" content="Emhemdi">
+    <title>إستبدل</title>
+    <base href="/" />
+    <link rel="apple-touch-icon" sizes="60x60" href="/assets/img/logo2@1x.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/logo2@1x.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/assets/img/logo2@1x.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/assets/img/logo2@1x.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/img/logo2@1x.png">
+    <link rel="shortcut icon" type="image/png" href="/assets/img/logo2@1x.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <!-- BEGIN VENDOR CSS-->
+
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/css-rtl/bootstrap.css">
+    <!-- /build-->
+    <!-- BEGIN VENDOR CSS-->
+    <!-- BEGIN Font icons-->
+    <link rel="stylesheet" type="text/css" href="/assets/fonts/font-awesome/font-awesome.css">
+    <!-- <link rel="stylesheet" type="text/css" href="/assets/template/fonts/flag-icon-css/css/flag-icon.min.css"> -->
+    <!-- END Font icons-->
+    <!-- BEGIN Plugins CSS-->
+    <!--  <link rel="stylesheet" type="text/css" href="/assets/template/css/plugins/sliders/slick/slick.css"> -->
+    <!-- END Plugins CSS-->
+    <!-- BEGIN Vendor CSS-->
+
+    <!-- END Vendor CSS-->
+    <!-- BEGIN ROBUST CSS-->
+    <!-- build:css robust-assets/css/app.min.css-->
+
+    <link rel="stylesheet" type="text/css" href="/assets/plugins/sweetalert/sweetalert.css">
+
+    <!-- <link rel="stylesheet" type="text/css" href="/assets/template/css/plugins/charts/morris.css"> -->
+    <link rel="stylesheet" href="/assets/plugins/slick-carousel/slick/slick.css">
+    <link rel="stylesheet" href="/assets/plugins/slick-carousel/slick/slick-theme.css">
+    <link rel="stylesheet" type="text/css" href="/assets/plugins/angularjs-slider/dist/rzslider.css" />
+    <link rel="stylesheet" href="/assets/plugins/jk-rating/jk-rating-stars.min.css" />
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- /build-->
+    <!-- END ROBUST CSS-->
+    <!-- BEGIN Page Level CSS-->
+    <!-- END Page Level CSS-->
+    <!-- BEGIN Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="/assets/css/istibdel.css">
+
+    <%- include("scripts") -%>
+
+        <script>
+            function myFunction() {
+                var x = document.getElementById("myTopnav");
+                if (x.className === "topnav") {
+                    x.className += " responsive";
+                } else {
+                    x.className = "topnav";
+                }
+            }
+        </script>
+</head>
+
+<body ng-controller="IstibdelController">
+
+    <nav class="nav-bar ">
+
+        <div class="menu-icon">
+
+            <i onclick="myFunction()" class="fa fa-bars"></i>
+            <a ng-show="currentUser" href="/usersNotif/{{currentUser.objectId}}" style="color: #8f8e94;">
+                <i class="fa fa-bell-o"></i>
+                <span ng-show="notifCount" class="badge ">{{notifCount}}</span>
+            </a>
+        </div>
+        <div class="topnav" id="myTopnav">
+            <a onclick="myFunction()" href="/" class="active">الرئيسية</a>
+            <a onclick="myFunction()" href="/categories">جميع الفئات</a>
+            <a onclick="myFunction()" ng-show="currentUser" href="/users/{{currentUser.objectId}}">إعلاناتي </a>
+            <a onclick="myFunction()" href="/condition"> الأحكام والشروط </a>
+            <a onclick="myFunction()" ng-show="currentUser" href="/transfer">الدفع </a>
+            <a onclick="myFunction()" href="/about"> من نحن</a>
+
+        </div>
+
+        <div class="menu-profile">
+            <ul>
+                <li>
+                    <a ng-hide="currentUser" target="_self" href="/account/login">
+                        <i class="fa fa-user"></i>
+                    </a>
+                    <a ng-show="currentUser" href="/users/{{currentUser.objectId}}">
+                        <i class="fa fa-user"></i>
+                    </a>
+                </li>
+                <li>
+                    <a ng-hide="currentUser" target="_self" href="/account/login">دخول</a>
+                    <a ng-show="currentUser" href="/users3/{{currentUser.objectId}}">{{currentUser.fullName}}</a>
+                </li>
+                <li>
+                    <span>-</span>
+                </li>
+                <li>
+                    <a ng-show="currentUser" ng-click="logout()"> خروج</a>
+                </li>
+                <li>
+                    <a target="_blank" href="{{istibdelConfig.contacts.instagram}}">
+                        <i class="fa fa-instagram"></i>
+                    </a>
+                </li>
+                <li>
+                    <a target="_blank" href="{{istibdelConfig.contacts.facebook}}">
+                        <i class="fa fa-facebook-official"></i>
+                    </a>
+                </li>
+                <li>
+                    <a target="_blank" href="{{istibdelConfig.contacts.twitter}}">
+                        <i class="fa fa-twitter"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+
+
+
+    </nav>
+
+    <div class="header-page">
+        <div class="logo">
+            <a href="/">
+                <img src="assets/img/logo@2x.png">
+            </a>
+        </div>
+        <div class="search-bar">
+            <input type="text" class="" ng-model="searchs.keyWord" placeholder="  اكتب كلمة البحث  ">
+            <button ng-click="search(searchs.keyWord,slider.min,slider.max,searchs.category.id,searchs.categoryParent.id,searchs.country,searchs.locality)">
+                <i class="fa fa-search"></i>
+            </button>
+        </div>
+        <div class="category-bar dropdown">
+
+            <button data-toggle="modal" data-target="#searchModal" id="search" class="white dropdown-toggle" type="button" data-toggle="dropdown">
+                <i class="fa fa-cogs"></i>
+                <span> البحث المتقدم</span>
+            </button>
+            <!--  <div class="dropdown-menu drop">
+                <div class="">
+                    <span>السعر</span>
+                </div>
+
+                <div dir="ltr">
+                    <rzslider rz-slider-model="slider.min" rz-slider-high="slider.max" rz-slider-options="slider.options"></rzslider>
+                </div>
+
+
+
+                <button class=" filters-button dropdown-toggle" ng-click="select(true)">{{categ.name ||'كل الفئات'}}</button>
+
+                <div ng-show="show" class="select">
+                    <ul>
+                        <li>
+                            <div class="pointer hover">
+                                <span ng-click="selectCategory()">الكل</span>
+                            </div>
+                        </li>
+                        <li ng-repeat="parent in searchCategories">
+                            <div class="pointer hover">
+                                <span ng-click="selectCategory(parent)">{{parent.name}}</span>
+                            </div>
+                            <ul>
+                                <li ng-repeat=" child in searchCategory[parent.id]">
+                                    <div class="pointer hover">
+                                        <span ng-click="selectCategory(parent,child)">{{child.name}}</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <input style="border-bottom-right-radius: 0; border-top-right-radius: 0; border-radius: 5px;" class="line-input" on-change="filterLocationChange(location,country,locality)"
+                    type="text" details="place" ng-model="adresse" ng-autocomplete placeholder="تحديد المدينة">
+                
+                <div class="center">
+                    <button class="searchClose" ng-click="closeSearch()">إعتماد</button>
+                </div>
+
+
+
+
+            </div> -->
+
+
+        </div>
+
+        <div class="action-bar">
+            <a ng-show="currentUser" href="annonces/edit/new">
+                <button class="red">
+                    <img class="img-15-15" src="assets/img/add@2x.png" /> &nbsp;&nbsp;أضف إعلانك
+
+                </button>
+            </a>
+            <a ng-hide="currentUser" href="/account/login" target="_self">
+                <button class="red">
+                    <img class="img-15-15" src="assets/img/add@2x.png" /> &nbsp;&nbsp;أضف إعلانك
+
+                </button>
+            </a>
+        </div>
+        <div class="modal fade"  id="searchModal">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+        
+                        <div class="modal-body ">
+                            <div class="">
+                                <span>السعر</span>
+                            </div>
+        
+                            <div dir="ltr">
+                                <rzslider rz-slider-model="slider.min" rz-slider-high="slider.max" rz-slider-options="slider.options"></rzslider>
+                            </div>
+        
+        
+        
+                            <button class=" filters-button dropdown-toggle" ng-click="select(true)">{{categ.name ||'كل الفئات'}}</button>
+        
+                            <div ng-show="show" class="select">
+                                <ul>
+                                    <li>
+                                        <div class="pointer hover">
+                                            <span ng-click="selectCategory()">الكل</span>
+                                        </div>
+                                    </li>
+                                    <li ng-repeat="parent in searchCategories">
+                                        <div class="pointer hover">
+                                            <span ng-click="selectCategory(parent)">{{parent.name}}</span>
+                                        </div>
+                                        <ul>
+                                            <li ng-repeat=" child in searchCategory[parent.id]">
+                                                <div class="pointer hover">
+                                                    <span ng-click="selectCategory(parent,child)">{{child.name}}</span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+        
+                            <input style="border-bottom-right-radius: 0; border-top-right-radius: 0; border-radius: 5px; width:100%" class="line-input" on-change="filterLocationChange(location,country,locality)"
+                                type="text" details="place" ng-model="searchs.country" ng-autocomplete placeholder="تحديد المدينة">
+        
+                            <div class="center">
+                                <button class="searchClose" ng-click="closeSearch()">إعتماد</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    </div>
+   

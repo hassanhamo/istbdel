@@ -1,0 +1,436 @@
+<div class="page-content" style="top:66px" block-ui="blockPage">
+    <div class="range-buttons">
+        <button ng-repeat="(rangeLabel, range) in ranges" ng-class="{'btn-info':rangeLabel === selectedRange, 'btn-secondary': rangeLabel !== selectedRange}"
+            ng-click="selectRange(rangeLabel, range)" type="button" class="btn btn-min-width btn-default btn-circle btn-outline">{{rangeLabel}}</button>
+
+        <button ng-class="{'btn-info':selectedRange === 'مخصص', 'btn-secondary': 'مخصص' !== selectedRange}" ng-click="selectedRange = 'مخصص'"
+            type="button" class="btn btn-min-width btn-default btn-circle btn-outline">
+            <i class="fa fa-calendar" style="vertical-align: middle;"></i> مخصص</button>
+
+        <h4 ng-hide="selectedRange === 'مخصص'" class="range-label">
+            <b>من</b>
+            <span ng-hide="selectedRange =='الكل' ">{{startDate | moment:'format':'dddd D MMMM YYYY'}}</span>
+            <span ng-show="selectedRange =='الكل' ">البداية</span>
+            <b>إلى</b>
+            <span>{{endDate | moment:'format':'dddd D MMMM YYYY'}}</span>
+        </h4>
+        <h4 ng-show="selectedRange === 'مخصص'" class="range-label">
+            <b> من </b>
+            <input type="text" class="form-control date-r-input b-datepicker " date-picker="startDate" disable-past />
+            <b> إلى </b>
+            <input type="text" class="form-control date-r-input b-datepicker " date-picker="endDate" disable-past />
+            <a href="" ng-click="refresh()">
+                <i class="fa fa-arrow-circle-o-left"> </i>
+            </a>
+        </h4>
+    </div>
+
+
+    <div class="row m-t-40">
+        <div class="panel no-bd bd-3 panel-stat">
+            <div class="panel-header">
+                <h3>
+                    <i class="icon-graph"></i>
+                    <strong> إحصائيات الإعلانات</strong>
+                </h3>
+                <div class="control-btn">
+                    <a href="#" ng-click="refreshAnnoncesStats()" class="panel-reload hidden">
+                        <i class="icon-reload"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="panel-body p-15 p-b-0">
+                <div class="row m-b-10">
+                    <div class="actions m-10 col-xs-10">
+                        <button class="btn btn-sm" ng-class="{'btn-primary':annonceFilter === 'isSeen', 'btn-outline btn-default':annonceFilter !== 'isSeen'}"
+                            ng-click="changeAnnonceStatFilter('isSeen')">الأكثر مشاهدة</button>
+                        <button class="btn btn-sm" ng-class="{'btn-primary':annonceFilter === 'notSeen', 'btn-outline btn-default':annonceFilter !== 'notSeen'}"
+                            ng-click="changeAnnonceStatFilter('notSeen')">الأقل مشاهدة</button>
+                        <button class="btn btn-sm" ng-class="{'btn-primary':annonceFilter === 'isNew', 'btn-outline btn-default':annonceFilter !== 'isNew'}"
+                            ng-click="changeAnnonceStatFilter('isNew')">الحديثة</button>
+                        <button class="btn btn-sm" ng-class="{'btn-primary':annonceFilter === 'isPurchase', 'btn-outline btn-default':annonceFilter !== 'isPurchase'}"
+                            ng-click="changeAnnonceStatFilter('isPurchase')">تم بيعها حديثا </button>
+                        <button class="btn btn-sm" ng-class="{'btn-primary':annonceFilter === 'isExchange', 'btn-outline btn-default':annonceFilter !== 'isExchange'}"
+                            ng-click="changeAnnonceStatFilter('isExchange')">تم إستبدلها حديثا</button>
+
+                    </div>
+                    <div class="info-count  row col-xs-2">
+                        <span style="display:inline;">الحد الأقصى:</span>
+                        <input type="number" class="form-control form-white" style="width:50%" placeholder="" ng-model="annonceMax" ng-change="changeAnnonceStatFilter(annonceFilter)">
+
+
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="panel-stat-chart m-10" style="height: 80%;">
+                    <h1 ng-show="annonces.length==0" style="text-align:center">لا يوجد</h1>
+                <div class="panel panel-default hover-effect col-lg-4 col-sm-6" ng-repeat="item in annonces">
+                    <div class="panel-heading h-300 p-0">
+                        <img src="{{item.images[0] || 'assets/images/not-found.jpg'}}" class="img-responsive hover-img" style="width:100%" alt="">
+                    </div>
+                    <div class="panel-body p-10">
+                        <div class="clearfix  col-xs-10">
+                            <h3 class="c-dark w-600 align-center"><a href="/annonces/{{item.id}}">{{item.name|limitTo:30}}<span ng-show="item.name.length>30">...</span> </a></h3>
+                            <p class="c-gray f-16 align-center">
+                                <i class="icon-calendar"></i> {{item.createdAt | moment:'format':'dddd D MMMM YYYY'}}</p>
+                        </div>
+                        <div class=" col-xs-2 p-t-20">
+                            <div class=" c-gray">
+                                <div class="text-center m-b-20">
+                                    <i class="fa fa-eye"></i>
+                                    <span>{{item.get('viewCount')}}</span>
+                                </div>
+                                <div class="text-center">
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="row m-t-40">
+        <div class="col-xs-6">
+            <div class="panel no-bd bd-3 panel-stat">
+                <div class="panel-header">
+                    <h3>
+                        <i class="icon-graph"></i>
+                        <strong> عدد الإعلانات بالأقسام </strong>
+                    </h3>
+                    <div class="control-btn">
+                        <a href="#" ng-click="refreshCategoriesChart()" class="panel-reload hidden">
+                            <i class="icon-reload"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="panel-body p-15 p-b-0">
+                    <div class="row m-b-10">
+                        <div class="actions m-10 col-xs-6">
+
+                        </div>
+                        <div class="info-count m-t-10  row col-xs-6">
+
+                            <i class=" icons-graphic-design-07 m-r-10"></i>
+                            <span>{{annoncesCount === undefined ? '...':annoncesCount}}</span>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="panel-stat-chart m-10" style="height: 80%;">
+
+                    <canvas id="categories_statistics" class="full" height="140"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-6">
+            <div class="panel no-bd bd-3 panel-stat">
+                <div class="panel-header">
+                    <h3>
+                        <i class="icon-graph"></i>
+                        <strong> إحصائيات عدد الإعلانات </strong>
+                    </h3>
+                    <div class="control-btn">
+                        <a href="#" ng-click="refreshAnnoncesChart()" class="panel-reload hidden">
+                            <i class="icon-reload"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="panel-body p-15 p-b-0">
+                    <div class="row m-b-10">
+                        <div class="actions m-10 col-xs-6">
+                            <button class="btn btn-sm" ng-class="{'btn-primary':annonceGroupBy === 'days', 'btn-outline btn-default':annonceGroupBy !== 'days'}"
+                                ng-click="changeAnnonceFilter('days')">بالأيام</button>
+                            <button class="btn btn-sm" ng-class="{'btn-primary':annonceGroupBy === 'months', 'btn-outline btn-default':annonceGroupBy !== 'months'}"
+                                ng-click="changeAnnonceFilter('months')">بالشهور</button>
+                            <button class="btn btn-sm" ng-class="{'btn-primary':annonceGroupBy === 'years', 'btn-outline btn-default':annonceGroupBy !== 'years'}"
+                                ng-click="changeAnnonceFilter('years')">بالسنوات</button>
+                        </div>
+                        <div class="info-count m-t-10  row col-xs-6">
+
+                            <i class=" icons-graphic-design-07 m-r-10"></i>
+                            <span>{{annoncesCount === undefined ? '...':annoncesCount}}</span>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="panel-stat-chart m-10" style="height: 80%;">
+
+                    <canvas ng-if="annonceGroupBy === 'days'" id="annonce_statistics" class="full" height="140"></canvas>
+                    <canvas ng-if="annonceGroupBy === 'months'" id="annonce_statistics" class="full" height="140"></canvas>
+                    <canvas ng-if="annonceGroupBy === 'years'" id="annonce_statistics" class="full" height="140"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="panel no-bd bd-3 panel-stat">
+                <div class="panel-header">
+                    <h3>
+                        <i class="icon-graph"></i>
+                        <strong> إحصائيات المبيعات</strong>
+                    </h3>
+                    <div class="control-btn">
+                        <a href="#" ng-click="refreshPurchasesChart()" class="panel-reload hidden">
+                            <i class="icon-reload"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="panel-body p-15 p-b-0">
+                    <div class="row m-b-10">
+                        <div class="actions m-10 col-xs-6">
+                            <button class="btn btn-sm" ng-class="{'btn-primary':purchaseGroupBy === 'days', 'btn-outline btn-default':purchaseGroupBy !== 'days'}"
+                                ng-click="changePurchaseFilter('days')">بالأيام</button>
+                            <button class="btn btn-sm" ng-class="{'btn-primary':purchaseGroupBy === 'months', 'btn-outline btn-default':purchaseGroupBy !== 'months'}"
+                                ng-click="changePurchaseFilter('months')">بالشهور</button>
+                            <button class="btn btn-sm" ng-class="{'btn-primary':purchaseGroupBy === 'years', 'btn-outline btn-default':purchaseGroupBy !== 'years'}"
+                                ng-click="changePurchaseFilter('years')">بالسنوات</button>
+                        </div>
+                        <div class="info-count m-t-10  row col-xs-6">
+
+                            <i class=" icons-graphic-design-07 m-r-10"></i>
+                            <span>{{purchasesCount === undefined ? '...':purchasesCount}}</span>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="panel-stat-chart m-10" style="height: 80%;">
+
+
+                    <canvas ng-if="purchaseGroupBy === 'days'" id="purchase_statistics" class="full" height="140"></canvas>
+                    <canvas ng-if="purchaseGroupBy === 'months'" id="purchase_statistics" class="full" height="140"></canvas>
+                    <canvas ng-if="purchaseGroupBy === 'years'" id="purchase_statistics" class="full" height="140"></canvas>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-6">
+            <div class="panel no-bd bd-3 panel-stat">
+                <div class="panel-header">
+                    <h3>
+                        <i class="icon-graph"></i>
+                        <strong> إحصائيات الإستبدلات</strong>
+                    </h3>
+                    <div class="control-btn">
+                        <a href="#" ng-click="refreshExchangesChart()" class="panel-reload hidden">
+                            <i class="icon-reload"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="panel-body p-15 p-b-0">
+                    <div class="row m-b-10">
+                        <div class="actions m-10 col-xs-6">
+                            <button class="btn btn-sm" ng-class="{'btn-primary':exchangeGroupBy === 'days', 'btn-outline btn-default':exchangeGroupBy !== 'days'}"
+                                ng-click="changeExchangeFilter('days')">بالأيام</button>
+                            <button class="btn btn-sm" ng-class="{'btn-primary':exchangeGroupBy === 'months', 'btn-outline btn-default':exchangeGroupBy !== 'months'}"
+                                ng-click="changeExchangeFilter('months')">بالشهور</button>
+                            <button class="btn btn-sm" ng-class="{'btn-primary':exchangeGroupBy === 'years', 'btn-outline btn-default':exchangeGroupBy !== 'years'}"
+                                ng-click="changeExchangeFilter('years')">بالسنوات</button>
+                        </div>
+                        <div class="info-count m-t-10  row col-xs-6">
+
+                            <i class=" icons-graphic-design-07 m-r-10"></i>
+                            <span>{{exchangesCount === undefined ? '...':exchangesCount}}</span>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="panel-stat-chart m-10" style="height: 80%;">
+
+
+                    <canvas ng-if="exchangeGroupBy === 'days'" id="exchange_statistics" class="full" height="140"></canvas>
+                    <canvas ng-if="exchangeGroupBy === 'months'" id="exchange_statistics" class="full" height="140"></canvas>
+                    <canvas ng-if="exchangeGroupBy === 'years'" id="exchange_statistics" class="full" height="140"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="panel no-bd bd-3 panel-stat">
+            <div class="panel-header">
+                <h3>
+                    <i class="icon-graph"></i>
+                    <strong> إحصائيات المستخدمين</strong>
+                </h3>
+                <div class="control-btn">
+                    <a href="#" ng-click="refreshUsersChart()" class="panel-reload hidden">
+                        <i class="icon-reload"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="panel-body p-15 p-b-0">
+                <div class="row m-b-10">
+                    <div class="actions m-10 col-xs-10">
+                        <button class="btn btn-sm" ng-class="{'btn-primary':userFilter === 'isActive', 'btn-outline btn-default':userFilter !== 'isActive'}"
+                            ng-click="changeUserFilter('isActive')">الأكثر نشاطا</button>
+                        <button class="btn btn-sm" ng-class="{'btn-primary':userFilter === 'notActive', 'btn-outline btn-default':userFilter !== 'notActive'}"
+                            ng-click="changeUserFilter('notActive')">الأقل نشاطا</button>
+                        <button class="btn btn-sm" ng-class="{'btn-primary':userFilter === 'isPurchase', 'btn-outline btn-default':userFilter !== 'isPurchase'}"
+                            ng-click="changeUserFilter('isPurchase')">الأكثر شراء</button>
+                        <button class="btn btn-sm" ng-class="{'btn-primary':userFilter === 'notPurchase', 'btn-outline btn-default':userFilter !== 'notPurchase'}"
+                            ng-click="changeUserFilter('notPurchase')">الأقل شراء</button>
+                        <button class="btn btn-sm" ng-class="{'btn-primary':userFilter === 'isSale', 'btn-outline btn-default':userFilter !== 'isSale'}"
+                            ng-click="changeUserFilter('isSale')">الأكثر بيعا</button>
+                        <button class="btn btn-sm" ng-class="{'btn-primary':userFilter === 'notSale', 'btn-outline btn-default':userFilter !== 'notSale'}"
+                            ng-click="changeUserFilter('notSale')">الأقل بيعا</button>
+                        <button class="btn btn-sm" ng-class="{'btn-primary':userFilter === 'isParticipate', 'btn-outline btn-default':userFilter !== 'isParticipate'}"
+                            ng-click="changeUserFilter('isParticipate')">الأكثر مشاركة</button>
+                        <button class="btn btn-sm" ng-class="{'btn-primary':userFilter === 'notParticipate', 'btn-outline btn-default':userFilter !== 'notParticipate'}"
+                            ng-click="changeUserFilter('notParticipate')">الأقل مشاركة</button>
+
+                    </div>
+                    <div class="info-count  row col-xs-2">
+                        <span style="display:inline;">الحد الأقصى:</span>
+                        <input type="number" class="form-control form-white" style="width:50%" placeholder="" ng-model="userMax" ng-change="changeUserFilter(userFilter)">
+
+
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="panel-stat-chart m-10" style="height: 80%;">
+                    <h1 ng-show="users.length==0" style="text-align:center">لا يوجد</h1>
+                <div class="col-lg-3 col-sm-6" ng-repeat="item in users">
+                    <div class="panel widget-member3">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <img src="{{item[0].avatar || 'assets/images/profile.png'}}" alt="" class="img-responsive img-md">
+                            </div>
+                            <div class="col-xs-8">
+                                <h3 class="m-t-0 member-name">
+                                    <strong>
+                                        <a href="users/{{item[0].id}}">{{item[0].fullName}}</a>
+                                    </strong>
+                                </h3>
+                                <p dir="ltr" class="member-job">{{item[0].username}}</p>
+                                <div class="row">
+                                    <div class="col-xlg-12">
+                                        <p>
+                                            <i ng-show="userFilter=='isParticipate'||userFilter=='notParticipate'" class="icons-chat-messages-01 c-gray-light p-r-10"></i>
+                                            <i ng-hide="userFilter=='isParticipate'||userFilter=='notParticipate'" class="icons-graphic-design-07 c-gray-light p-r-10"></i> {{item[1]}} </p>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="row m-t-40">
+        <div class="col-xs-6">
+            <div class="panel no-bd bd-3 panel-stat">
+                <div class="panel-header">
+                    <h3>
+                        <i class="icon-graph"></i>
+                        <strong> إحصائيات التنزيل</strong>
+                    </h3>
+                    <div class="control-btn">
+                        <a href="#" ng-click="refreshInstallationsChart()" class="panel-reload hidden">
+                            <i class="icon-reload"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="panel-body p-15 p-b-0">
+                    <div class="row m-b-10">
+                        <div class="actions m-10 col-xs-6">
+                            <button class="btn btn-sm" ng-class="{'btn-primary':installationGroupBy === 'days', 'btn-outline btn-default':installationGroupBy !== 'days'}"
+                                ng-click="changeInstallationFilter('days')">بالأيام</button>
+                            <button class="btn btn-sm" ng-class="{'btn-primary':installationGroupBy === 'months', 'btn-outline btn-default':installationGroupBy !== 'months'}"
+                                ng-click="changeInstallationFilter('months')">بالشهور</button>
+                            <button class="btn btn-sm" ng-class="{'btn-primary':installationGroupBy === 'years', 'btn-outline btn-default':installationGroupBy !== 'years'}"
+                                ng-click="changeInstallationFilter('years')">بالسنوات</button>
+                        </div>
+                        <div class="info-count m-t-10 row col-xs-6">
+                            <div class="col-xs-4">
+                                <i class="icon-screen-smartphone"></i>
+                                <span>{{installationsCount === undefined ? '...':installationsCount}}</span>
+                            </div>
+                            <div class="col-xs-4" style="color:rgba(220,220,220,1)">
+                                <i class="fa fa-apple"></i>
+                                <span>{{iosInstallationsCount === undefined ? '...':iosInstallationsCount}}</span>
+                            </div>
+                            <div class="col-xs-4" style="color:rgba(49, 157, 181,1)">
+                                <i class="fa fa-android"></i>
+                                <span>{{androidInstallationsCount === undefined ? '...':androidInstallationsCount}}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="panel-stat-chart m-10" style="height: 80%;">
+
+
+                    <canvas ng-if="installationGroupBy === 'days'" id="installation_statistics" class="full" height="140"></canvas>
+                    <canvas ng-if="installationGroupBy === 'months'" id="installation_statistics" class="full" height="140"></canvas>
+                    <canvas ng-if="installationGroupBy === 'years'" id="installation_statistics" class="full" height="140"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="panel no-bd bd-3 panel-stat">
+                <div class="panel-header">
+                    <h3>
+                        <i class="icon-graph"></i>
+                        <strong> إحصائيات التسجيل</strong>
+                    </h3>
+                    <div class="control-btn">
+                        <a href="#" ng-click="refreshInscriptionsChart()" class="panel-reload hidden">
+                            <i class="icon-reload"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="panel-body p-15 p-b-0">
+                    <div class="row m-b-10">
+                        <div class="actions m-10 col-xs-6">
+                            <button class="btn btn-sm" ng-class="{'btn-primary':inscriptionGroupBy === 'days', 'btn-outline btn-default':inscriptionGroupBy !== 'days'}"
+                                ng-click="changeInscriptionFilter('days')">بالأيام</button>
+                            <button class="btn btn-sm" ng-class="{'btn-primary':inscriptionGroupBy === 'months', 'btn-outline btn-default':inscriptionGroupBy !== 'months'}"
+                                ng-click="changeInscriptionFilter('months')">بالشهور</button>
+                            <button class="btn btn-sm" ng-class="{'btn-primary':inscriptionGroupBy === 'years', 'btn-outline btn-default':inscriptionGroupBy !== 'years'}"
+                                ng-click="changeInscriptionFilter('years')">بالسنوات</button>
+                        </div>
+                        <div class="info-count m-t-10  row col-xs-6">
+
+                            <i class="icon-user-follow m-r-10"></i>
+                            <span>{{inscriptionsCount === undefined ? '...':inscriptionsCount}}</span>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="panel-stat-chart m-10" style="height: 80%;">
+
+
+                    <canvas ng-if="inscriptionGroupBy === 'days'" id="inscription_statistics" class="full" height="140"></canvas>
+                    <canvas ng-if="inscriptionGroupBy === 'months'" id="inscription_statistics" class="full" height="140"></canvas>
+                    <canvas ng-if="inscriptionGroupBy === 'years'" id="inscription_statistics" class="full" height="140"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+</div>

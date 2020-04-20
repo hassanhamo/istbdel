@@ -1,0 +1,79 @@
+<div class="page-content" style="top:66px">
+    <div class="header">
+        <div class="append-icon">
+            <input type="text" name="firstname" id="finder" class="form-control form-white input-lg search" ng-model="filters.search"
+                placeholder="البحث..." autofocus="">
+            <i class="icon-magnifier m-t-10"></i>
+
+        </div>
+        <div class="breadcrumb-wrapper">
+
+        </div>
+    </div>
+
+    <div class="row">
+        <h1 ng-show="users.length==0" style="text-align:center">لا يوجد</h1>
+        <div class="panel">
+                <div class="panel-header panel-controls ui-sortable-handle">
+                  <h3><i class="fa fa-users"></i> <strong>{{usersCount}}</strong> </h3>
+                
+                <div class="panel-content">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th>الإسم</th>
+                        <th>المكان</th>
+                        <th>رقم الهاتف</th>
+                        <th>الحالة</th>
+                        <th>تاريخ التسجيل</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="item in users"  >
+                        <td><img src="{{item.avatar||'assets/images/profile.png'}}" alt="" class="img-circle img-sm"></td>
+                        <td>{{item.fullName}}</td>
+                        <td>{{item.adresse||'لا يوجد'}}</td>
+                        <td>{{item.username||'لا يوجد'}}</td>
+                        <td>{{item.isBlocked ?'محظور':'متاح' }}</td>
+                        <td>{{item.createdAt|moment:'format':'DD/MM/YYYY'}}</td>
+                        <td><i class=" icon-trash c-red" delete-btn="item" container-id="#item-{{item.id}}"></i>
+                            <i class=" icon-book-open" ng-click="show(item.id)"></i></td>
+                      </tr>
+                      
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+       <!--  <div class="col-lg-12 portlets">
+            <div class="panel panel-transparent">
+                <div class="panel-content">
+                    <div class="portfolioContainer grid">
+                        <div ng-repeat="item in users" class="col-md-4" id="item-{{item.id}}">
+                            <figure class="effect-dexter">
+                                <img src="assets/images/user_background_full.jpg" alt="">
+                                <figcaption>
+                                    <h2 ><img src="{{item.avatar||'assets/images/profile.png'}}" alt="img12" class="img-circle img-md">
+                                         {{item.fullName}}
+                                    </h2>
+                                    <p style="z-index:20000">
+                                        <i class=" fa fa-phone" > </i> <span dir="ltr">{{item.username||'لا يوجد'}}</span> </br>
+                                        <i class=" fa  fa-map-marker" > </i> <span >{{item.adresse||'لا يوجد'}}</span> </br>
+                                        <i class=" icon-trash c-red" delete-btn="item" container-id="#item-{{item.id}}"></i>
+                                        <i class=" icon-book-open" ng-click="show(item.id)"></i>
+                                        
+                                        </p>
+                                    <a href="#">View more</a>
+                                </figcaption>
+                            </figure>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    </div>
+    <kr-pager page="filters.page" page-size="filters.pageSize"></kr-pager>
+</div>

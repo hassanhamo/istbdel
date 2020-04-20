@@ -1,0 +1,42 @@
+<!-- <div class="dataTables_paginate paging_simple_numbers" ng-show="totalPages > 1">
+    <ul class="pagination">
+        <li class="paginate_button previous" ng-class="{'disabled':page === 1}">
+            <a href="javascript:void(0)" aria-label="Previous" ng-click="prev()">
+                <span aria-hidden="true">«</span>
+            </a>
+        </li>
+        <li class="paginate_button" ng-repeat="pageNumber in pageNumbers" ng-class="{'active':pageNumber === page}"><a href="javascript:void(0)" ng-click="goTo(pageNumber)">{{pageNumber}}</a></li>
+        <li class="paginate_button next" ng-class="{'disabled':page === totalPages}">
+            <a href="javascript:void(0)" aria-label="Next" ng-click="next()">
+                <span aria-hidden="true">»</span>
+            </a>
+        </li>
+        
+    </ul>
+</div> -->
+<div class="pagination-container margin-top-20 margin-bottom-40" ng-show="totalPages > 1 && false">
+    <nav class="pagination">
+        <ul>
+
+            <li ng-repeat="pageNumber in pageNumbers">
+                <a href="#" ng-class="{'current-page':pageNumber === page}" ng-click="goTo(pageNumber)">{{pageNumber}}</a>
+            </li>
+
+            <li ng-class="{'disabled':page === totalPages}">
+                <a href="#" ng-click="next()">
+                    <i class="sl sl-icon-arrow-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+<div class="btn-group m-l-20" ng-show="totalPages > 1 ">
+    <button class="btn btn-primary" type="button" ng-if="!(page === 1)" ng-click="prev()">
+        <i class="fa fa-angle-right"></i>
+    </button>
+    <button  ng-repeat="pageNumber in pageNumbers" class="btn btn-primary " ng-class="{'active':pageNumber === page}" ng-click="goTo(pageNumber)">{{pageNumber}}</button>
+    
+    <button class="btn btn-primary" type="button" ng-if="!(page === totalPages)" ng-click="next()">
+        <i class="fa fa-angle-left"></i>
+    </button>
+</div>

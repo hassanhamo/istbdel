@@ -1,0 +1,147 @@
+<!-- BEGIN PAGE CONTENT -->
+<div class="page-content page-app page-profil">
+    <div class="col-md-4">
+        <div class="panel panel-default hover-effect">
+            <div class="panel-heading h-250 p-0">
+                <img ng-show="user.avatar" src="{{user.avatar  }}" class="img-responsive hover-img" style="width:100%" alt="">
+                <img ng-show="!user.avatar" src="{{'assets/images/no-user-photo.png' }}" class="img-responsive hover-img" style="width:100%;height:100%"
+                    alt="">
+            </div>
+            <div class="panel-body p-10 col-md-6">
+
+                <h3 class="c-dark w-600 align-center">{{user.fullName}}</h3>
+                <i class=" fa fa-phone"> </i>
+                <span dir="ltr">{{user.username||'لا يوجد'}}</span>
+                </br>
+                <i class=" fa  fa-map-marker"> </i>
+                <span>{{user.adresse||'لا يوجد'}}</span>
+
+                </br>
+                </br>
+                <div class="onoffswitch">
+                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" ng-model="isBlocked" ng-change="blocked()" id="myonoffswitch1"
+                        checked="">
+                    <label class="onoffswitch-label" for="myonoffswitch1">
+                        <span class="onoffswitch-inner">
+                            <span class="onoffswitch-active">
+                                <span class="onoffswitch-switch">متاح</span>
+                            </span>
+                            <span class="onoffswitch-inactive">
+                                <span class="onoffswitch-switch">محظور</span>
+                            </span>
+                        </span>
+                    </label>
+                </div>
+
+
+            </div>
+            <div class="panel-body p-10 col-md-6">
+                <div style="float:left;">
+                    <h3 class="c-dark w-600 align-center">الدين المتخلد</h3>
+
+                    <span dir="ltr">{{user.credit||'لا يوجد'}}</span>
+                    <span ng-show="user.credit">ريال</span>
+                    </br>
+
+
+                    </br>
+
+                    </br>
+                    <button ng-show="user.credit > 0" class="btn btn-primary btn-square" ng-click="setCredit()">قضاء الدين</button>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+    <div class=" col-md-8 ">
+        <div class="profil-content">
+            <div class="panel">
+                <div class="panel-header  ui-sortable-handle">
+
+
+                </div>
+                <div class="panel-content">
+                    <ul class="nav nav-tabs nav-primary">
+                        <li class="active">
+                            <a href="#tab2_1" target="_self" data-toggle="tab">
+                                <i class="icon icons-graphic-design-07"></i> الإعلانات</a>
+                        </li>
+                        <li class="">
+                            <a href="#tab2_2" target="_self" data-toggle="tab">
+                                <i class="icon icons-chat-messages-01"></i> المحادثات</a>
+                        </li>
+
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade active in" id="tab2_1">
+
+                            <p ng-show="annonces.length==0">لا يوجد</p>
+
+                            <div class="panel panel-transparent">
+                                <div class="panel-content">
+                                    <div class="portfolioContainer grid">
+                                        <div ng-repeat="item in annonces" class="col-md-4" id="item-{{item.id}}">
+                                            <figure class="animal effect-zoe magnific" kr-square-image="{{item.images[0]}}">
+                                                <!-- <img src="{{item.images[0]}}" alt="9" style="width:100%" /> -->
+                                                <figcaption style="height: 100px;">
+
+                                                    <h2 class="col-xs-10">
+                                                        <i ng-show="item.isSpecial" class="fa fa-thumb-tack"></i>{{item.name|limitTo:30}}
+                                                        <span ng-show="item.name.length>30">...</span>
+                                                    </h2>
+                                                    <i class="col-xs-1 icon-trash c-red" delete-btn="item" container-id="#item-{{item.id}}"></i>
+                                                    <i class="col-xs-1 icon-book-open">
+                                                        <a href="/annonces/{{item.id}}"></a>
+                                                    </i>
+
+
+                                                    <!-- <p>{{item.annonceDescription}}</p> -->
+                                                </figcaption>
+                                            </figure>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="tab-pane fade " id="tab2_2">
+                            <p ng-show="comments.length==0">لا يوجد</p>
+                            <div class="item item-comment" ng-repeat="item in comments" id="item-{{item.id}}">
+                                <div class="user">
+                                    <img alt="Profile Image" src="{{item.annonce.images[0] || 'assets/images/not-found.jpg'}}" style="border-radius: 6px;" class=" img-sm m-r-10">
+                                    <h5 class="name">
+                                        <a href="annonces/{{item.annonce.id}}">{{item.annonce.name || 'إعلان'}}</a>
+                                    </h5>
+                                    <div class="clearfix">
+                                        <p class="time-icon">
+                                            <i class="icon-calendar"></i>
+                                        </p>
+                                        <p class="place">
+                                            <img ng-show="item.productPurchase" src="assets/images/verif.png" style="width:15px;height:15px">
+                                        </p>
+                                        <img ng-show="item.confirmPurchase" src="assets/images/confirm.png" style="width:15px;height:15px">
+                                        <i class=" icon-trash c-red m-l-10" delete-btn="item" container-id="#item-{{item.id}}"></i>
+                                        </p>
+                                        <p class="time">{{item.createdAt | moment:'format':'D MMMM YYYY'}}</p>
+                                    </div>
+                                    <div class="comment">{{item.content}}
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- END PAGE CONTENT -->

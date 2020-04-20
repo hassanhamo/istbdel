@@ -1,0 +1,39 @@
+<form novalidate jq-validation ng-submit="doSubmit()">
+    <div block-ui="editorUI">
+        <div class="alert alert-danger" ng-bind="error" ng-show="error"></div>
+        <div class="alert alert-success" ng-show="success">تم الحفظ بنجاح!</div>
+        <div class="form-group" ng-repeat="field in metadata.fields">
+            <label class="control-label" ng-bind="field.label"></label>
+            <div ng-show="field.type === 'text'">
+                <input type="text" name="text-{{field.name}}" ng-disabled="submitting" class="form-control" ng-model="metadata.model[field.name]"
+                    ng-required="field.validation.required" />
+            </div>
+
+            <div ng-show="field.type === 'dropdown'">
+                <select class="form-control" name="dropdown-{{field.name}}" ng-disabled="submitting" ng-model="metadata.model[field.name]"
+                    ng-options="o as o for o in field.dataSource" ng-required="field.validation.required">
+                    </select>
+            </div>
+
+            <div ng-show="field.type === 'textarea'">
+                <textarea class="form-control" name="textarea-{{field.name}}" ng-disabled="submitting" ng-model="metadata.model[field.name]"
+                    ng-required="field.validation.required"></textarea>
+            </div>
+
+            <div ng-show="field.type === 'wysiwyg'">
+                <textarea class="form-control" name="wysiwyg-{{field.name}}" ckeditor ng-disabled="submitting" ng-model="metadata.model[field.name]"
+                    ng-required="field.validation.required"></textarea>
+            </div>
+
+            <div ng-show="field.type === 'file'" class="file-container">
+                <kz-file-upload name="field.uploader" queue="fileQueue[field.name]" validation="field.validation" file-selected="fileSelected(fileInfo, field)"
+                    file-uploaded="fileUploaded(fileInfo, field)" upload-error="uploadError(fileInfo, error)" done="uploadDone()"></kz-file-upload>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-info" ng-disabled="submitting">حفظ</button>
+        </div>
+
+    </div>
+</form>

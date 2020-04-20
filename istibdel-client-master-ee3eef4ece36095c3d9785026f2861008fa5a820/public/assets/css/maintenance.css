@@ -1,0 +1,31 @@
+
+body {
+    
+   /*  background-repeat: no-repeat; */
+    
+    background-size: cover;
+    
+    vertical-align: middle;
+   
+}
+ @media  (min-width: 1100px) {
+ 
+    body {
+        background-image: url('../img/maintenance.png');
+       
+        
+        background-size: cover;
+   
+        vertical-align: middle;
+    }
+}
+@media  (max-width: 1100px) {
+    body {
+        background-image: url('../img/mobile-maintenance.png') ;
+        
+       
+        background-size: cover;
+
+        vertical-align: middle;
+    }
+} 

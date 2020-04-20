@@ -1,0 +1,200 @@
+<!-- BEGIN PAGE CONTENT -->
+<div class="page-content page-profil">
+    <div class="col-lg-10 col-md-9 col-xs-9">
+        <div dir="ltr" class="row  widget widget_slider" style="height: 400px;">
+            <slick infinite="true" slides-to-show="3" slides-to-scroll="1">
+
+                <div ng-repeat="item in annonce.images" style="margin:0 10px;">
+                    <a href="{{item}}" target="_black">
+                        <img src="{{item}}" class="img-responsive hover-img" style="height:390px" />
+                    </a>
+                </div>
+
+            </slick>
+
+        </div>
+        <div class="profil-content ">
+
+
+            <div class="panel">
+                <div class="panel-header  ui-sortable-handle">
+                    <h3>{{annonce.name}} </h3>
+
+                </div>
+                <div class="panel-content">
+                    <ul class="nav nav-tabs nav-primary">
+                        <li class="active">
+                            <a href="#tab2_1" target="_self" data-toggle="tab">
+                                <i class="icon-info"></i> التفاصيل</a>
+                        </li>
+                        <li class="">
+                            <a href="#tab2_2" target="_self" data-toggle="tab">
+                                <i class="icon icons-chat-messages-01"></i> المحادثات</a>
+                        </li>
+                        <li>
+                            <a ng-click="showLocation()" target="_self" href="#tab2_3" data-toggle="tab">
+                                <i class="fa fa-map-marker"></i> المكان على الخريطة</a>
+                        </li>
+                        <li>
+                            <a target="_self" href="#tab2_4" data-toggle="tab">
+                                <i class="fa fa-flag"></i> البلاغات</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade active in" id="tab2_1">
+
+                            <p> {{annonce.annonceDescription || 'لا يوجد'}}</p>
+
+                        </div>
+                        <div class="tab-pane fade " id="tab2_2">
+                            <p ng-show="comments.length==0">لا يوجد</p>
+                            <div class="item item-comment" ng-repeat="item in comments" id="item-{{item.id}}">
+                                <div class="user">
+                                    <img alt="Profile Image" src="{{item.author.avatar || 'assets/images/profile.png'}}" class="img-circle img-sm m-r-10">
+                                    <h5 class="name">
+                                        <a href="users/{{item.author.id}}">{{item.author.fullName || 'مستخدم'}}</a>
+                                    </h5>
+                                    <div class="clearfix">
+                                        <p class="time-icon">
+                                            <i class="icon-calendar"></i>
+                                        </p>
+                                        <p class="place">
+                                            <img ng-show="item.productPurchase" src="assets/images/verif.png" style="width:15px;height:15px">
+                                        </p>
+
+                                        <i class=" icon-trash c-red m-l-10" delete-btn="item" container-id="#item-{{item.id}}"></i>
+                                        </p>
+                                        <p class="time">{{item.createdAt | moment:'format':'D MMMM YYYY'}}</p>
+                                    </div>
+                                    <div class="comment">{{item.content}}
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane fade" id="tab2_3">
+                            <p ng-show="!annonce.location">غير محدد</p>
+                            <div ng-if="sLocation && annonce.location " class="m-20">
+                                <ng-map center="{{annonce.location.latitude+','+annonce.location.longitude}}" zoom="15" style="height:400px;">
+
+                                    <marker position="{{annonce.location.latitude+','+annonce.location.longitude}}"></marker>
+                                </ng-map>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="tab2_4">
+                            <p ng-show="reports.length==0">لا يوجد</p>
+                            <div class="item item-comment" ng-repeat="item in reports" id="item-{{item.id}}">
+                                <div class="user">
+                                    <img alt="Profile Image" src="{{item.user.avatar || 'assets/images/profile.png'}}" class="img-circle img-sm m-r-10">
+                                    <h5 class="name">
+                                        <a href="users/{{item.user.id}}">{{item.author.fullName || 'مستخدم'}}</a>
+                                    </h5>
+                                    <div class="clearfix">
+                                        <p class="time-icon">
+                                            <i class="icon-calendar"></i>
+                                        </p>
+                                        <p class="place">
+
+                                        </p>
+
+                                        <i class=" icon-trash c-red m-l-10" delete-btn="item" container-id="#item-{{item.id}}"></i>
+                                        </p>
+                                        <p class="time">{{item.createdAt | moment:'format':'D MMMM YYYY'}}</p>
+                                    </div>
+                                    <div class="comment">{{item.message}}
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-3 col-xs-3 hidden-sm hidden-xs profil-right">
+        <div class="profil-sidebar-element m-t-10">
+            <div class="row">
+                <div class="col-xs-4">
+                    <img src="{{annonce.author.avatar || 'assets/images/profile.png'}}" alt="profil 4" class="img-circle img-md">
+                </div>
+                <div class="col-xs-8">
+                    <h3 class="m-t-20 member-name">
+                        <strong>
+                            <a href="/users/{{annonce.author.id}}">{{annonce.author.fullName}}</a>
+                        </strong>
+                    </h3>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="profil-sidebar-element m-t-20">
+            <h3>
+                <strong>القسم</strong>
+            </h3>
+            <p class="c-gray m-t-0">
+                <i>{{annonce.category.name}}</i>
+            </p>
+            <h3>
+                <strong>الحالة</strong>
+            </h3>
+            <p class="c-gray m-t-0">
+                <i>{{annonce.status || 'لا يوجد'}}</i>
+            </p>
+            <h3>
+                <strong>الكمية</strong>
+            </h3>
+            <p class="c-gray m-t-0">
+                <i>{{annonce.quantity ||'0' }}</i>
+            </p>
+            <h3>
+                <strong> الكمية المتبقية</strong>
+            </h3>
+            <p class="c-gray m-t-0">
+                <i>{{annonce.remainingQuantity||'0' }}</i>
+            </p>
+            <h3>
+                <strong>عدد المشاهدات</strong>
+            </h3>
+            <p class="m-t-0">
+                <span class="c-primary">
+                    <strong>{{annonce.viewCount || 0}}</strong>
+                </span> مشاهدة</p>
+
+
+            <h3>
+                <strong>المكان</strong>
+            </h3>
+            <p class="c-gray m-t-0">
+                <i>{{annonce.adresse || 'لا يوجد'}}</i>
+            </p>
+        </div>
+        <div class="m-t-20">
+            <button ng-show="annonce.isSpecial" ng-click="changeSpecial(annonce)" type="button" class="btn btn-block btn-warning bd-0 no-bd">
+                <i class="fa fa-thumb-tack"></i> &nbsp;مميز</button>
+            <button ng-hide="annonce.isSpecial" ng-click="changeSpecial(annonce)" type="button" class="btn btn-block btn-default bd-0 no-bd">
+                <i class="fa fa-thumb-tack"></i> &nbsp; غير مميز </button>
+        </div>
+        <div class="m-t-20">
+            <button type="button" class="btn btn-block btn-primary bd-0 no-bd">
+                <i class="fa fa-credit-card"></i> &nbsp; {{annonce.price}}</button>
+        </div>
+        <div class="m-t-20">
+            <button ng-show="!annonce.exchange && !annonce.purchase" type="button" class="btn btn-block btn-success bd-0 no-bd">
+                التفاوض</button>
+            <button ng-show="annonce.exchange && !annonce.purchase" type="button" class="btn btn-block btn-warning bd-0 no-bd">
+                تم الإستبدال </button>
+            <button ng-show="!annonce.exchange && annonce.purchase" type="button" class="btn btn-block btn-danger bd-0 no-bd">
+                تم البيع </button>
+        </div>
+    </div>
+
+</div>
+<!-- END PAGE CONTENT -->

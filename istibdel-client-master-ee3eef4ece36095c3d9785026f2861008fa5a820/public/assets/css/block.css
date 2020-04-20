@@ -1,0 +1,30 @@
+body {
+   
+   /*  background-repeat: no-repeat; */
+    
+    background-size: cover;
+    
+    vertical-align: middle;
+   
+}
+@media  (min-width: 1100px) {
+ 
+    body {
+        background-image: url('../img/block.png');
+       /*  background-repeat: no-repeat; */
+        
+        background-size: cover;
+   
+        vertical-align: middle;
+    }
+}
+@media  (max-width: 1100px) {
+    body {
+        background-image: url('../img/mobile-block.png') ;
+        /* background-repeat: no-repeat; */
+       
+        background-size: cover;
+
+        vertical-align: middle;
+    }
+}

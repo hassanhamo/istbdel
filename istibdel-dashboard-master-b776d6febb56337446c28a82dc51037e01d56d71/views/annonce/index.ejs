@@ -1,0 +1,58 @@
+<div class="page-content" style="top:66px">
+    <div class="header">
+        <div class="append-icon">
+            <input type="text" name="firstname" id="finder" class="form-control form-white input-lg search" ng-model="filters.search"
+                placeholder="البحث..." autofocus="">
+            <i class="icon-magnifier m-t-10"></i>
+
+        </div>
+        <div class="breadcrumb-wrapper">
+            <div class="btn-group">
+                <button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown" aria-expanded="false">{{filters.category.name ||'كل الأقسام'}}
+                    <span class="caret"></span>
+                </button>
+                <span class="dropdown-arrow dropdown-arrow-inverse"></span>
+                <ul class="dropdown-menu dropdown-inverse" role="menu" style="height:300px;overflow-y:scroll;">
+                    <li  ng-click="categoryChange()">
+                        <a href="#">كل الأقسام</a>
+                    </li>
+                    <li ng-repeat="item in categories" ng-click="categoryChange(item)">
+                        <a href="#">{{item.name }}</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <h1 ng-show="annonces.length==0" style="text-align:center">لا يوجد</h1>
+        <div class="col-lg-12 portlets">
+            <div class="panel panel-transparent">
+                <div class="panel-content">
+                    <div class="portfolioContainer grid">
+                        <div ng-repeat="item in annonces" class="col-md-4" id="item-{{item.id}}">
+                            <figure class="animal effect-zoe magnific" kr-square-image="{{item.images[0]}}">
+                                <!-- <img src="{{item.images[0]}}" alt="9" style="width:100%" /> -->
+                                <figcaption style="height: 100px;">
+
+                                    <h2 class="col-xs-10"><i ng-show="item.isSpecial" class="fa fa-thumb-tack"></i>{{item.name|limitTo:30}}<span ng-show="item.name.length>30">...</span></h2>
+                                    <i class="col-xs-1 icon-trash c-red" delete-btn="item" container-id="#item-{{item.id}}"></i>
+                                    <i class="col-xs-1 icon-book-open">
+                                        <a href="/annonces/{{item.id}}"></a>
+                                    </i>
+
+
+                                    <!-- <p>{{item.annonceDescription}}</p> -->
+                                </figcaption>
+                            </figure>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <kr-pager page="filters.page" page-size="filters.pageSize"></kr-pager>
+</div>

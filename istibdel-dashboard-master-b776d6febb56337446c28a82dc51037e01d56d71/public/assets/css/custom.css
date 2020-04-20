@@ -1,0 +1,223 @@
+.search{
+  max-width: 300px;
+  margin: 10px;
+}
+.header .append-icon i {
+  margin-right: -56px;
+  left: auto;
+  right: auto;
+}
+.main-content .page-content > .header i{
+  font-size: initial; 
+  margin-left: initial;
+   opacity: initial; 
+   padding: initial;
+  -webkit-border-radius: initial; 
+  -moz-border-radius: initial;
+  border-radius: initial; 
+}
+.modal-open .modal {
+  z-index: 11000;
+}
+/* upload file */
+div[kr-square-image] {
+  background-repeat: no-repeat;
+  background-position: 50%;
+  background-size: cover;
+  display: inline-block;
+  vertical-align: middle;
+  border: 1px solid white;
+  box-shadow: 0px 0px 0px 1px #dedede;
+  border-radius: 2px;
+}
+div[kr-square-image][small-icon] {
+  filter: invert(20%);
+  border: none;
+  box-shadow: none;
+}
+.fileUpload {
+  position: relative;
+  overflow: hidden;
+  min-width: 140px;
+  margin-top: 5px;
+}
+.fileUpload input.upload {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+.file-sort {
+  text-align: center !important;
+  font-size: 16px;
+}
+.file-sort a {
+  color: rgba(0, 0, 0, 0.25);
+  display: block;
+}
+.dnd-note {
+  padding: 10px;
+  font-style: italic;
+  color: #9f9f9f;
+  border: 1px dashed lightgray;
+  border-radius: 2px;
+}
+progress::-webkit-progress-bar {
+  background: lightgray;
+}
+progress::-webkit-progress-value {
+  background: red;
+}
+.upload-table .progress {
+  max-width: 75%;
+  margin-bottom: 0 !important;
+  width: 185px;
+  border-radius: 2px;
+  float: right;
+}
+.upload-table tbody > tr:last-child > td {
+  border-bottom: 1px solid #ddd;
+}
+.upload-table .delete-btn {
+  color: #F4511E;
+  font-size: 18px;
+}
+.upload-table > div {
+  display: flex;
+  align-items: center;
+  padding: 4px 0;
+  border-bottom: 1px solid #efefef;
+}
+.upload-table > div > div:first-child {
+  width: 30px;
+  padding-right: 10px;
+}
+.upload-table > div > div:nth-child(2) {
+  width: 82%;
+}
+.upload-table > div > div:nth-child(3) {
+  width: 30%;
+  text-align: right;
+  padding-right: 10px;
+}
+.upload-table {
+  margin-bottom: 10px;
+}
+.upload-inline {
+  display: flex;
+  flex-wrap: wrap;
+}
+.upload-inline > div {
+  margin: 4px;
+  position: relative;
+  width: 80px;
+}
+.upload-inline > div > .idle {
+  opacity: 0.5;
+}
+.upload-inline .fileUpload {
+  width: 100%;
+  text-align: center;
+  border: 1px solid lightgray;
+  min-width: initial;
+  border-radius: 2px;
+  background: #f2f2f2;
+}
+.upload-inline .fileUpload input {
+  height: inherit;
+  width: inherit;
+  top: 0;
+  margin-top: 0 !important;
+}
+.upload-inline .fileUpload i {
+  font-size: 30px;
+  display: inline-block;
+  vertical-align: middle;
+  color: #b2b0b0;
+  margin-top: 25px;
+}
+.upload-inline .fa-times-circle {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  color: orangered;
+  font-size: 18px;
+  background: white;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1;
+}
+.upload-inline .circle-progress-bar {
+  position: absolute;
+  z-index: 2;
+  right: 10px;
+  top: 10px;
+}
+.upload-inline .radial-progress .inset,
+.upload-inline .radial-progress .circle .shadow {
+  box-shadow: none;
+}
+.upload-inline.multiple {
+  display: flex;
+  flex-wrap: wrap;
+}
+.upload-inline.multiple .fileUpload {
+  width: 80px;
+  height: 80px;
+}
+.upload-inline.multiple .fileUpload .fa-plus {
+  font-size: 30px;
+  display: inline-block;
+  vertical-align: middle;
+  color: #b2b0b0;
+  margin-top: 32px;
+}
+/* end upload file */
+
+.grid figure {
+  width: 100%;
+}
+.page-profil .profil-header .profil-img {
+  border-left: none
+} 
+.range-buttons{
+  text-align: center;
+}
+.date-r-input {
+    width: 200px;
+    display: inline;
+}
+[ng-cloak] {
+  display: none !important;
+}
+/* Zoe */
+figure.effect-zoe figcaption{top:auto;bottom:0;padding:1em;height:3.75em;background:#fff;color:#3c4a50;-webkit-transition:-webkit-transform .35s;transition:transform .35s;-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0)}
+figure.effect-zoe h2{float:right}
+figure.effect-zoe figcaption>i{float:left}
+figure.effect-zoe p{position:absolute;bottom:8em;padding:2em;color:#fff;text-transform:none;font-size:90%;opacity:0;z-index: 20000;-webkit-transition:opacity .35s;transition:opacity .35s}
+figure.effect-zoe h2,figure.effect-zoe figcaption>i{-webkit-transition:-webkit-transform .35s;transition:transform .35s;-webkit-transform:translate3d(0,200%,0);transform:translate3d(0,200%,0)}
+
+figure.effect-zoe h2{display:inline-block}
+figure.effect-zoe p{opacity:1}
+figure.effect-zoe figcaption,figure.effect-zoe h2,figure.effect-zoe figcaption>i{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}
+figure.effect-zoe h2{-webkit-transition-delay:.05s;transition-delay:.05s}
+figure.effect-zoe figcaption>i:nth-child(4){-webkit-transition-delay:.1s;transition-delay:.1s}
+figure.effect-zoe figcaption>i:nth-child(3){-webkit-transition-delay:.15s;transition-delay:.15s}
+figure.effect-zoe figcaption>i:nth-child(2){-webkit-transition-delay:.2s;transition-delay:.2s}
+
+
+div[kr-square-image], figure[kr-square-image] {
+  background-repeat: no-repeat;
+  background-position: 50%;
+  background-size: cover;
+  display: inline-block;
+  vertical-align: middle;
+  border: 1px solid white;
+  box-shadow: 0px 0px 0px 1px #dedede;
+  border-radius: 2px;
+}

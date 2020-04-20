@@ -1,0 +1,108 @@
+﻿<div class="content">
+    <div class="slider-content" dir="ltr">
+        <slick infinite="true" slides-to-show="1" slides-to-scroll="1">
+
+            <div class="carousel-item" kr-square-image="/assets/img/slider2@2x.png">
+                <!-- <img src="/assets/img/slider2@2x.png"> -->
+            </div>
+            <div class="carousel-item" kr-square-image="/assets/img/slider@2x.png" style="    background-position: 40%;">
+                <!--  <img src="/assets/img/slider@2x.png"> -->
+                <div class="download-content">
+                    <span>تطبيق إستبدل لتبادل الألعاب</span>
+                    </br>
+                    <span>حمل التطبيق مجانا</span>
+                    </br>
+                    <div class="row">
+                        <a target="_blank" href="">
+                            <img class="col-xs-6" src="assets/img/Google-Play-Dark@2x.png">
+                        </a>
+                        <a target="_blank" href="">
+                            <img class="col-xs-6" src="assets/img/Apple-Store-Dark@2x.png">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </slick>
+    </div>
+
+</div>
+<div class="annonce-groupe col-xs-12" ng-repeat="item in categories">
+    <div class="title">
+        <img src="{{item.icon}}">
+        <span>{{item.name}}</span>
+    </div>
+    <button class="next" ng-click="nextPage(item)" ng-disabled="category[item.id].page >category[item.id].count/6">
+        <i class="fa fa-angle-left"></i>
+    </button>
+    <button class="prev" ng-click="prevPage(item)" ng-disabled="category[item.id].page < 2">
+        <i class="fa fa-angle-right"></i>
+    </button>
+    <div class="bordure"></div>
+    <div class="annonce-body row">
+        <div ng-show="category[item.id].annonces.length==0" class="center">
+                <img src="/assets/img/robo.png"><br>
+            <span >لا يوجد إعلانات</span>
+
+        </div>
+        <div class=" col-xs-12 col-sm-6 col-md-4 col-lg-2" ng-repeat="annonce in category[item.id].annonces">
+            <div class="annonce" style="background-image:url({{annonce.images[0]}})">
+                <button class="like {{isLike(annonce)}} " ng-click="like(annonce)">
+                    <i class="fa fa-heart-o"></i>
+                </button>
+                <button class="price ">{{annonce.price}} ريال</button>
+                <a href="annonces/{{annonce.id}}">
+                    <div style="width:100%; height:100%;"></div>
+                </a>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+<div class="info ">
+    <span>
+        على موقع إستبدل، ضع إعلانات مجانية ولا عمولة. يمكنك تصفح الإعلانات من الأفراد والمهنيين في جميع أنحاء العالم، سواء كنت تبحث
+        عن الإعلانات هايتيش، والألعاب المستخدمة، والعروض الإلكترونية أو أي نوع آخر من المنتجات المستخدمة.
+    </span>
+</div>
+<!-- <div class="comment-content">
+    <div class="comment-groupe">
+        <div class="title">
+            <span>ما يقوله مستخدمونا</span>
+        </div>
+        <button class="next">
+            <i class="fa fa-angle-left"></i>
+        </button>
+        <button class="prev">
+            <i class="fa fa-angle-right"></i>
+        </button>
+        <div class="bordure"></div>
+         <div class="comment-body row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="margin:15px 0">
+                <img src="/assets/img/default_avatar_male.jpg" />
+                <div class="comment">
+                    <span>منير بن ميمون</span>
+                    <p>بفضل إستبدل، اشتريت أول بلاي ستيشن، ومنذ ذلك الحين أنا لا أتركه بعد الآن.</p>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="margin:15px 0">
+                <img src="/assets/img/defaultTributePhotoFemale.jpg" />
+                <div class="comment">
+                    <span>إستبدل </span>
+                    <p>بفضل إستبدل، اشتريت أول بلاي ستيشن، ومنذ ذلك الحين أنا لا أتركه بعد الآن.</p>
+                </div>
+            </div>
+
+
+        </div> 
+
+    </div>
+</div> -->
+<script>
+    $('.drop').on('click', function (e) {
+        e.stopPropagation();
+
+    });
+</script>

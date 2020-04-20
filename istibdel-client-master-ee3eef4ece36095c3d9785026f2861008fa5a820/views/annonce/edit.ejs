@@ -1,0 +1,123 @@
+﻿<div class="content1" ng-show="currentUser">
+    <div class="slider-content" style="height: 100px">
+        <img src="/assets/img/bg-title@2x.png" style="height:100%; width:100%">
+        <div class="categ-title">
+            <h1>إضافة إعلان</h1>
+        </div>
+        <div class="categ-count">
+            <button ng-show="annonce.id && !annonce.isArchived" ng-click="delete(true)" class="red">
+                <i class="fa fa-trash"></i> &nbsp;&nbsp;حذف
+
+            </button>
+            <button ng-show="annonce.id && annonce.isArchived" ng-click="delete()" class="green">
+                <i class="fa fa-check-square"></i> &nbsp;&nbsp;تفعيل
+
+            </button>
+        </div>
+    </div>
+    <div class="row annonce-edit">
+        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+            <div class="annonce-right">
+                <span>عنوان الاعلان*</span>
+                <input class="line-input" type="text" ng-model="annonce.name" maxlength="60" placeholder="">
+                <div class="row g-input">
+                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                        <button ng-click="annonce.isExchange=true" ng-disabled="annonce.quantity>1" class="exchange {{annonce.isExchange?'active-ex':''}}">أستبدل</button>
+                    </div>
+                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                        <button ng-click="annonce.isExchange=false" class="exchange {{annonce.isExchange?'':'active-ex'}}">لا أستبدل</button>
+                    </div>
+                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 dropdown">
+                        <button class="category " type="button" data-toggle="dropdown">
+                            <i class="fa fa-chevron-down"></i>{{annonce.category.name||'اختر الفئة*'}}</button>
+                        <ul class="dropdown-menu">
+                            <li ng-repeat="parent in categories">
+                                <span>{{parent.name}}</span>
+                                <ul>
+                                    <li ng-repeat=" child in category[parent.id]">
+                                        <a href="#" ng-click="selectCategory(parent,child)">{{child.name}}</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 dropdown">
+                            <button class="category " type="button" data-toggle="dropdown">
+                                <i class="fa fa-chevron-down"></i>{{annonce.status||'اختر الحالة*'}}</button>
+                            <ul class="dropdown-menu">
+                               
+                                        <li >
+                                            <a href="#" ng-click="annonce.status='مستعمل'">مستعمل</a>
+                                        </li>
+                                        <li >
+                                                <a href="#" ng-click="annonce.status='جديد'">جديد</a>
+                                            </li>
+                                   
+                            </ul>
+                        </div>
+                </div>
+                <span>السعر (ريال)*</span>
+                <input class="line-input" type="number" ng-model="annonce.price" oninput="if(this.value.length>5){this.value = this.value.slice(0,5);};"
+                    max="99999" min="0" placeholder="">
+                <span>الكمية(100  كحد أقصى)*</span>
+                <input class="line-input" type="number" ng-model="annonce.quantity" ng-change="quantityChange()" oninput="this.value <= 100?(this.value <=1?this.value=1:true):this.value= 100;"  max="100"
+                    min="1" placeholder="">
+                <span>وصف الإعلان</span>
+                <input class="line-input" type="text" ng-model="annonce.annonceDescription" maxlength="150" placeholder="">
+                <div class="g-image">
+                    <span>صور الإعلان (5 صور كحد أقصى)*</span>
+                    <div class="row">
+                        <kr-file-upload auto multiple max="5" error="fileError(error,data)" name="backgroundUploader" queue="imagesQueue" allowed-extensions="jpg,jpeg,png,gif"
+                            display="inline" file-uploaded="fileUploaded(fileInfo, object)" file-removed="fileRemoved(fileInfo, index)"
+                            fail="uploadFail()"></kr-file-upload>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+            <div class="annonce-left">
+                <input class="line-input" on-change="locationChange(location,country,locality)" type="text" details="place" ng-model="annonce.adresse"
+                    ng-autocomplete placeholder="تحديد الموقع">
+                <div class="location">
+                    <ng-map center="{{annonce.location.latitude+','+annonce.location.longitude}}" zoom="15" style="height:200px;">
+                        <marker position="{{annonce.location.latitude+','+annonce.location.longitude}}"></marker>
+                    </ng-map>
+                </div>
+                <div class="dropdown">
+                    <input ng-show="annonce.tags.length<6" data-toggle="dropdown" ng-keyup="$event.keyCode == 13 ? addTag() : null" ng-model="tag" class="line-input" type="text"
+                        maxlength="10" placeholder="تحديد الوسوم">
+                    <ul ng-show="tags.length && tag" class="dropdown-menu" style="margin:0">
+                        <li ng-repeat="item in tags" ng-click="addTag(item.title)">{{item.title}}</li>
+                    </ul>
+                </div>
+
+                <button ng-repeat="tag in annonce.tags" class="tag">{{tag}}
+                    <i ng-click="deleteTag(tag)" class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="save">
+            <button data-toggle="modal" data-target="#condition" ng-disabled="!annonce.name || !annonce.price || !annonce.quantity || !annonce.images.length || !annonce.category || !annonce.status">حفظ الإعلان</button>
+        </div>
+    </div>
+    <div class="modal fade" data-backdrop="static" id="condition">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-body ">
+                    <div ng-bind-html="conditionUse">
+
+
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button data-dismiss="modal" ng-click="save()"> موافق</button>
+                    <button class="cancel" data-dismiss="modal">غير موافق</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

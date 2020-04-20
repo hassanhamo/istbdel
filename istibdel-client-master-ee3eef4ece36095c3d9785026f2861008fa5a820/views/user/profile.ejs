@@ -1,0 +1,157 @@
+<div class="content1">
+    <div class="slider-content" style="height: 300px">
+
+
+
+        <img src="/assets/img/bg-title@2x.png" style="height:100%; width:100%">
+
+        <div class="user">
+            <img src="{{user.avatar || 'assets/img/user@2x.png'}}" />
+            <div class="desc">
+                <span class="name">{{user.fullName}}</span>
+                </br>
+                <span class="address">{{user.adresse}}</span>
+            </div>
+        </div>
+        <div class="credit " ng-show="currentUser" data-toggle="modal" data-target="#rating-modal">
+                <jk-rating-stars  rating="user.rate" read-only="true" ></jk-rating-stars>
+            
+        </div>
+        <div class="credit " ng-hide="currentUser" >
+                <jk-rating-stars  rating="user.rate" read-only="true" ></jk-rating-stars>
+            
+        </div>
+        <div class="count row">
+            <div class="nb col-xs-3">
+                <span>{{annonceCount||0}}</br>اعلانات</span>
+                <span class="bar"></span>
+            </div>
+
+            <div class="nb col-xs-3">
+                <span>{{purchaseCount||0}}</br>المبيعات</span>
+                <span class="bar"></span>
+            </div>
+
+            <div class="nb col-xs-3">
+                <span>{{exchangeCount||0}}</br>المبادلات</span>
+                <span class="bar"></span>
+            </div>
+            <div class="nb col-xs-3">
+                <span>{{anoncePurchaseCount||0}}</br>المشتريات</span>
+            </div>
+
+        </div>
+
+
+
+    </div>
+    <div class="user-content">
+        <div class="user-tab">
+            <div class="header-user row">
+                <div class="col-xs-4">
+                    <div class="{{tab==1?'c-red':''}} pointer" ng-click="tab=1">
+                        <i class="fa fa-th"></i>
+                        <span>الإعلانات</span>
+                    </div>
+
+                </div>
+
+                <!--  <div class="col-xs-4">
+                        <div class="{{tab==3?'c-red':''}} pointer" ng-click="tab=3">
+                            <i class="fa fa-user"></i>
+                            <span>معلومات</span>
+                        </div>
+    
+                    </div> -->
+
+
+            </div>
+            <div class="bordure"></div>
+            <div class="body-user">
+                <div ng-show="tab==1" class="annonce-body row">
+                    <div ng-show="annonces.length==0" class="center">
+                        <img src="/assets/img/robo.png">
+                        <br>
+                        <span>لا يوجد إعلانات</span>
+
+                    </div>
+                    <div class=" col-xs-12 col-sm-6 col-md-3 col-lg-3" ng-repeat=" item in annonces">
+
+                        <div class="annonce" style="background-image:url({{item.images[0]}});margin: 15px 0;height:350px;">
+                            <button class="like {{isLike(item)}} " ng-click="like(item)">
+                                <i class="fa fa-heart-o"></i>
+                            </button>
+                            <button class="price ">{{item.price}} ريال</button>
+
+                            <a href="annonces/{{item.id}}">
+                                <div style="width:100%; height:100%;"></div>
+                            </a>
+
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+                <div ng-show="tab==3" class="user-profile row">
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <div class="avatar" kr-square-image="{{user.avatar}}">
+
+                        </div>
+                        <input class="line-input" type="text" ng-model="user.fullName" maxlength="30" placeholder="الاسم" readonly>
+                        <input class="line-input" type="text" ng-model="user.adresse" maxlength="30" placeholder="العنوان" readonly>
+
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+    <div class="modal fade" id="rating-modal" kr-modal="ratingModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"  >
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+    
+                       
+                    </div>
+                    <div class="modal-body">
+                        <div class="">
+                            <div >
+                                <jk-rating-stars max-rating="5" rating="rate" on-rating="onItemRating(rating)">
+                                </jk-rating-stars>
+                            </div>
+                            <div>
+                                    <textarea  type="text" ng-model="review"  placeholder=""/>
+                            </div>
+                            <div >
+                                <button ng-disabled="!rate" data-dismiss="modal"  href="#" ng-click="saveRate()" class="button white border">حفظ</button>
+                            </div>
+                        </div>
+    
+    
+    
+                    </div>
+    
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+
+
+
+</div>

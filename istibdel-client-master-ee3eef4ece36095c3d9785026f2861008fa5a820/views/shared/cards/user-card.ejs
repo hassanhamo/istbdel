@@ -1,0 +1,24 @@
+<div class="card profile-card-with-stats">
+    <div class="ribbon" ng-if="level">{{level}}</div>
+    <div class="text-xs-center">
+        <div class="card-block">
+            <img ng-src="{{user.avatar}}" class="rounded-circle  height-150" style="max-width: 150px;" ng-if="user.avatar">
+            <div style=" width: 150px;height: 150px;background: #f1f1f1;margin: 0 auto;border-radius: 50%;" ng-if="!user.avatar"></div>
+        </div>
+        <div class="card-block">
+            <h4 class="card-title">{{user.name}}</h4>
+            <ul class="list-inline list-inline-pipe">
+                <li>{{user.username}}</li>
+                <li>مشترك منذ {{user.subscriptionDate.iso | moment:'fromNow'}}</li>
+            </ul>
+            <h6 class="card-subtitle text-muted">{{user.usertype === 0 ? 'عميل':'تاجر'}}</h6>
+        </div>
+        <div class="btn-group" role="group" aria-label="Profile example" ng-if="user.usertype === 1">
+            <button type="button" class="btn btn-float box-shadow-0 btn-outline-info"><span class="ladda-label"><i class="icon-dollar"></i><span>{{earnings}}</span></span><span class="ladda-spinner"></span></button>
+            <button type="button" class="btn btn-float box-shadow-0 btn-outline-info"><span class="ladda-label"><i class="icon-spoon"></i><span>{{ordersCount}}</span></span><span class="ladda-spinner"></span></button>
+        </div>
+        <div class="card-block">
+            <a href="/dealers/{{user.objectId}}" class="btn btn-outline-success btn-md"><i class="icon-head"></i> الصفحة الشخصية</a>
+        </div>
+    </div>
+</div>

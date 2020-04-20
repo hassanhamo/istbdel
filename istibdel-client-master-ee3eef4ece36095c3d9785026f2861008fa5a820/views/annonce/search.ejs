@@ -1,0 +1,87 @@
+<div class="content">
+    <div class="slider-content" style="height: 100px">
+
+
+
+        <img src="/assets/img/bg-title@2x.png" style="height:100%; width:100%">
+
+        <div class="categ-title">
+            <h1>البحث</h1>
+        </div>
+        <div class="categ-count">
+            <h1>{{count}} إعلان</h1>
+        </div>
+
+
+
+    </div>
+    <div class="row categ-show">
+        <div class="">
+
+
+            <div class="annonce-groupe" style="margin:30px 0;">
+
+                <div class="annonce-body row">
+                    <div ng-show="annonces.length==0" class="center">
+                            <img src="/assets/img/robo.png"><br>
+                        <span >لا يوجد إعلانات</span>
+                    </div>
+
+                    <div  class="body-annonce col-xs-12 col-sm-12 col-md-12 col-lg-12 " ng-repeat="item in annonces">
+                        <a href="annonces/{{item.id}}">
+                            <div class="annonce col-xs-4" style="background-image:url({{item.images[0]}})">
+
+                            </div>
+                        </a>
+                        <div class="annonce-content">
+                            <div class="top ">
+                                <div class="name ">
+                                   
+                                    <span>{{item.name}}</span>
+                                </div>
+                                <div class="date ">
+                                    <img src="assets/img/time@2x.png">
+                                    <span>{{item.createdAt | formatDate : "YYYY/MM/DD"}}</span>
+
+                                </div>
+
+                            </div>
+                            <div class="desc">
+                                {{item.annonceDescription}}
+
+
+                            </div>
+                            <div class="bottom">
+                                <span>{{item.price}} ريال</span>
+                                <span class="exch {{item.isExchange?'b-black':'b-white'}}">إستبدل</span>
+                                <button class="like {{isLike(item)}} " ng-click="like(item)">
+                                    <i class="fa fa-heart-o"></i>
+                                </button>
+                                <div class="view">
+
+                                    <span>{{item.viewCount }}</span>
+                                    <img src="assets/img/viewer@2x.png">
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+                <kr-pager page="filters.page" page-size="filters.pageSize"></kr-pager>
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+</div>

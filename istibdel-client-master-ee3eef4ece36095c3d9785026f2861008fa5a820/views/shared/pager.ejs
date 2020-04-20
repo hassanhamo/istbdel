@@ -1,0 +1,11 @@
+
+<div class="btn-group pagination" ng-show="totalPages > 1 ">
+    <button class="btn btn-primary" type="button" ng-if="!(page === 1)" ng-click="prev()">
+        <i class="fa fa-angle-right"></i>
+    </button>
+    <button  ng-repeat="pageNumber in pageNumbers" class="btn btn-primary " ng-class="{'active':pageNumber === page}" ng-click="goTo(pageNumber)">{{pageNumber}}</button>
+    
+    <button class="btn btn-primary" type="button" ng-if="!(page === totalPages)" ng-click="next()">
+        <i class="fa fa-angle-left"></i>
+    </button>
+</div>

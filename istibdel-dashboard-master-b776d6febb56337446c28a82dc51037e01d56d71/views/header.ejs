@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="rtl" ng-app="istibdel" ng-cloak>
+
+<head>
+	<base href="/" />
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta content="width=device-width, initial-scale=1" name="viewport" />
+	<link rel="shortcut icon" href="assets/images/logo2@1x.png" type="image/png">
+	<title>لوحة التحكم: إستبدل</title>
+
+	
+<link href="/assets/plugins/bootstrap/css/bootstrap-rtl.min.css" rel="stylesheet">
+<link href="/assets/template/global/plugins/mcustom-scrollbar/mcustom_scrollbar.min.css" rel="stylesheet">
+<link href="/assets/template/global/plugins/animation-css/animate.min.css" rel="stylesheet">
+<link href="/assets/template/global/css/icons/font-awesome/font-awesome.css" rel="stylesheet">
+<link href="/assets/template/global/css/icons/line-icons/line-icons.css" rel="stylesheet">
+<link href="/assets/template/global/css/icons/line-icons/simple-line-icons.css" rel="stylesheet">
+<link href="/assets/template/global/plugins/select2/dist/css/select2.css" rel="stylesheet">
+<link href="/assets/template/global/plugins/slick/slick.css" rel="stylesheet">
+<link href="/assets/template/global/plugins/icheck/skins/all.css" rel="stylesheet">
+<link href="/assets/template/global/plugins/bootstrap/css/jasny-bootstrap.css" rel="stylesheet">
+<link href="/assets/template/global/css/icons/rounded/style.css" rel="stylesheet">
+<link href="/assets/template/global/css/icons/octicons/octicons.css" rel="stylesheet">
+<link href="/assets/template/global/css/icons/weather/css/weather-icons.min.css" rel="stylesheet">
+<link href="/assets/template/global/plugins/bootstrap-loading/lada.min.css" rel="stylesheet">
+<link href="/assets/template/global/plugins/bootstrap-tags-input/bootstrap-tagsinput.css" rel="stylesheet">
+<link href="/assets/template/global/plugins/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet">
+<link href="/assets/template/global/plugins/prettify/prettify.css" rel="stylesheet">
+
+	<link href="/assets/template/global/css/style.css" rel="stylesheet">
+	<link href="/assets/template/global/css/theme.css" rel="stylesheet">
+	<link href="/assets/template/global/css/ui.css" rel="stylesheet">
+	<link href="/assets/template/admin/layout4/css/layout.css" rel="stylesheet">
+	<link href="/assets/plugins/sweetalert/sweetalert.css" rel="stylesheet" type="text/css" />
+	<link href="/assets/plugins/slick-carousel/slick/slick.css" rel="stylesheet" type="text/css" />
+	<link href="/assets/plugins/slick-carousel/slick/slick-theme.css" rel="stylesheet" type="text/css" />
+	
+	<!-- BEGIN PAGE STYLE -->
+	<link href="/assets/template/global/plugins/metrojs/metrojs.min.css" rel="stylesheet">
+	<link href="/assets/template/global/plugins/maps-amcharts/ammap/ammap.css" rel="stylesheet">
+	<link href="/assets/template/global/plugins/magnific/magnific-popup.min.css" rel="stylesheet">
+	<link href="/assets/template/global/plugins/hover-effects/hover-effects.min.css" rel="stylesheet">
+	<link href="/assets/plugins/summernote/summernote.css" rel="stylesheet" type="text/css" />
+	 <link href="/assets/template/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
+	<link href="/assets/css/custom.css" rel="stylesheet">
+	
+	
+	
+	
+	<!-- END PAGE STYLE -->
+	<!-- <script src="/assets/plugins/jquery.min.js" type="text/javascript"></script>
+	<script src="/assets/template/global/plugins/bootstrap/js/bootstrap.min.js"></script> -->
+	 <%-include('scripts') %>
+	<!-- <script src="assets/template/global/plugins/modernizr/modernizr-2.6.2-respond-1.1.0.min.js"></script> -->
+</head>
+<!-- LAYOUT: Apply "submenu-hover" class to body element to have sidebar submenu show on mouse hover -->
+<!-- LAYOUT: Apply "sidebar-collapsed" class to body element to have collapsed sidebar -->
+<!-- LAYOUT: Apply "sidebar-top" class to body element to have sidebar on top of the page -->
+<!-- LAYOUT: Apply "sidebar-hover" class to body element to show sidebar only when your mouse is on left / right corner -->
+<!-- LAYOUT: Apply "submenu-hover" class to body element to show sidebar submenu on mouse hover -->
+<!-- LAYOUT: Apply "fixed-sidebar" class to body to have fixed sidebar -->
+<!-- LAYOUT: Apply "fixed-topbar" class to body to have fixed topbar -->
+<!-- LAYOUT: Apply "rtl" class to body to put the sidebar on the right side -->
+<!-- LAYOUT: Apply "boxed" class to body to have your page with 1200px max width -->
+
+<!-- THEME STYLE: Apply "theme-sdtl" for Sidebar Dark / Topbar Light -->
+<!-- THEME STYLE: Apply  "theme sdtd" for Sidebar Dark / Topbar Dark -->
+<!-- THEME STYLE: Apply "theme sltd" for Sidebar Light / Topbar Dark -->
+<!-- THEME STYLE: Apply "theme sltl" for Sidebar Light / Topbar Light -->
+
+<!-- THEME COLOR: Apply "color-default" for dark color: #2B2E33 -->
+<!-- THEME COLOR: Apply "color-primary" for primary color: #319DB5 -->
+<!-- THEME COLOR: Apply "color-red" for red color: #C9625F -->
+<!-- THEME COLOR: Apply "color-green" for green color: #18A689 -->
+<!-- THEME COLOR: Apply "color-orange" for orange color: #B66D39 -->
+<!-- THEME COLOR: Apply "color-purple" for purple color: #6E62B5 -->
+<!-- THEME COLOR: Apply "color-blue" for blue color: #4A89DC -->
+<!-- BEGIN BODY -->
+
+<body class="sidebar-top fixed-topbar fixed-sidebar theme-sdtl color-default dashboard"  >
+	<!--[if lt IE 7]>
+		<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+		<![endif]-->
+	
+		<!-- BEGIN SIDEBAR -->
+		<div class="sidebar">
+			<div class="logopanel">
+				<h1>
+					<a href="/"></a>
+	
+				</h1>
+			</div>
+			<%- include("menu") -%>
+
+		</div>
+		<!-- END SIDEBAR -->
+		<div class="main-content">
+			<!-- BEGIN TOPBAR -->
+			<div class="topbar">
+				<div class="header-left" ng-controller="NotificationController">
+					<div class="topnav">
+						<a class="menutoggle" href="#" data-toggle="sidebar-collapsed"><span class="menu__handle"><span>الخيارات</span></span></a>
+						<ul class="nav nav-icons">
+							<li><a href="/notifications" ng-click="notif()" class="toggle-sidebar-top"><span class="icon-bell"></span></a></li>
+							
+						</ul>
+					</div>
+				</div>
+				<div class="header-right" ng-controller="LoginController">
+					<ul class="header-menu nav navbar-nav">
+						
+						
+						
+						<!-- BEGIN USER DROPDOWN -->
+						<li class="dropdown" id="user-header">
+							<a href="#" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+					<img src="assets/images/user.png" alt="user image">
+					<span class="username">الإدارة</span>
+					</a>
+							<!-- <ul class="dropdown-menu">
+								<li>
+									<a href="#"><i class="icon-user"></i><span>My Profile</span></a>
+								</li>
+								<li>
+									<a href="#"><i class="icon-calendar"></i><span>My Calendar</span></a>
+								</li>
+								<li>
+									<a href="#"><i class="icon-settings"></i><span>Account Settings</span></a>
+								</li>
+								<li>
+									<a href="#"><i class="icon-logout"></i><span>Logout</span></a>
+								</li>
+							</ul> -->
+						</li>
+						<!-- END USER DROPDOWN -->
+						<!-- CHAT BAR ICON -->
+						<li id="quickview-toggle" ng-click="logout()"><a href="#"><i class="icon-logout"></i></a></li>
+					</ul>
+				</div>
+				<!-- header-right -->
+			</div>
+			<!-- END TOPBAR -->

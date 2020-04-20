@@ -1,0 +1,587 @@
+<div class="content1" ng-show="currentUser">
+    <div class="slider-content" style="height: 300px">
+
+
+
+        <img src="/assets/img/bg-title@2x.png" style="height:100%; width:100%">
+
+        <div class="user">
+            <img src="{{user.avatar || 'assets/img/user@2x.png'}}" />
+            <div class="desc">
+                <span class="name">{{user.fullName}}</span>
+                </br>
+                <span class="address">{{user.adresse}}</span>
+            </div>
+        </div>
+        <div class="credit " ng-show="user.credit">
+            <span class="pointer" data-toggle="modal" data-target="#info-credit">الباقي: {{user.credit}} ريال</span>
+        </div>
+        <div class="count row">
+            <div class="nb col-xs-3">
+                <span>{{annonceCount||0}}</br>اعلانات</span>
+                <span class="bar"></span>
+            </div>
+
+            <div class="nb col-xs-3">
+                <span>{{purchaseCount||0}}</br>المبيعات</span>
+                <span class="bar"></span>
+            </div>
+
+            <div class="nb col-xs-3">
+                <span>{{exchangeCount||0}}</br>المبادلات</span>
+                <span class="bar"></span>
+            </div>
+            <div class="nb col-xs-3">
+                <span>{{anoncePurchaseCount||0}}</br>المشتريات</span>
+            </div>
+
+        </div>
+
+
+
+    </div>
+    <div class="user-content">
+        <div class="user-tab">
+            <div class="header-user row">
+                <div class="col-xs-3">
+                    <div class="pointer {{tab==1?'c-red':''}}" ng-click="tab=1">
+                        <i class="fa fa-th"></i>
+                        <span>إعلاناتي</span>
+                    </div>
+
+                </div>
+                <div class="col-xs-3">
+                    <div class="pointer {{tab==2?'c-red':''}}" ng-click="tab=2">
+                        <i class="fa fa-credit-card"></i>
+                        <span>المباعة</span>
+                    </div>
+
+                </div>
+                <div class="col-xs-3">
+                    <div class="pointer {{tab==3?'c-red':''}}" ng-click="tab=3">
+                        <i class="fa fa-arrows-h"></i>
+                        <span>المستبدلة</span>
+                    </div>
+
+                </div>
+                <div class="col-xs-3">
+                    <div class="pointer {{tab==4?'c-red':''}}" ng-click="tab=4">
+                        <i class="fa fa-shopping-cart"></i>
+                        <span>المشتريات</span>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="bordure"></div>
+            <div ng-show="tab==1" class="body-user" style="padding:30px">
+                <div ng-show="(comments.length==0)&&(annonces.length==0)" class="center">
+                    <img src="/assets/img/robo.png"><br>
+                    <span >لا يوجد إعلانات</span>
+
+                </div>
+
+                <div class=" notif col-xs-12 col-sm-12 col-md-4 col-lg-4 " ng-repeat="item in comments">
+                    <div class="notif-head">
+                        <div class="user">
+                            <img src="{{item.author.avatar|| 'assets/img/user@2x.png'}}" />
+                            <div class="desc">
+                                <span class="name">{{item.author.fullName}}</span>
+                            </div>
+                        </div>
+                        <div class="date">
+                            <span>{{item.createdAt | formatDate : "hh:mm"}}</span>
+                        </div>
+
+                    </div>
+
+                    <div class="notif-body ">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <a href="/annonces/{{item.annonce.id}}">
+                                    <div class="img-annonce " style="background-image:url({{item.annonce.images[0]}})">
+
+                                    </div>
+                                </a>
+
+                            </div>
+
+
+                            <div class="annonce-details col-xs-8">
+                                <div class="title ">
+                                    <span>{{item.annonce.name|limitTo:15}}</span>
+                                    <span ng-show="item.annonce.name.length >15">...</span>
+                                </div>
+                                <div class="content">
+                                    <span class="price">{{item.annonce.price}} ريال</span>
+                                    <span class="exch {{item.annonce.isExchange?'b-black':'b-white'}}">إستبدل</span>
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="prop">
+                        <span>
+                            {{item.content}}
+                        </span>
+
+                    </div>
+                    <div class="action">
+                        <button class="cf-purchase" data-toggle="modal" data-target="#condition" ng-click="selectItem(item.annonce,null,item)">تأكيد عملية البيع</button>
+
+                    </div>
+
+
+                </div>
+
+                <!-- -->
+                <div ng-repeat=" annonce in annonces">
+                    <div class=" notif col-xs-12 col-sm-12 col-md-4 col-lg-4 " ng-repeat="item in annonce.exchangedAnnonce">
+                        <div class="notif-head">
+                            <div class="user">
+                                <img src="{{item.author.avatar|| 'assets/img/user@2x.png'}}" />
+                                <div class="desc">
+                                    <span class="name">{{item.author.fullName}}</span>
+                                </div>
+                            </div>
+                            <div class="date">
+                                <span>{{item.createdAt | formatDate : "hh:mm"}}</span>
+                            </div>
+
+                        </div>
+
+                        <div class="notif-body ">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <a href="/annonces/{{annonce.id}}">
+                                        <div class="img-annonce " style="background-image:url({{annonce.images[0]}})">
+
+                                        </div>
+                                    </a>
+
+                                </div>
+
+
+                                <div class="annonce-details col-xs-8">
+                                    <div class="title ">
+                                        <span>{{annonce.name|limitTo:15}}</span>
+                                        <span ng-show="annonce.name.length >15">...</span>
+                                    </div>
+                                    <div class="content">
+                                        <span class="price">{{annonce.price}} ريال</span>
+                                        <span class="exch {{annonce.isExchange?'b-black':'b-white'}}">إستبدل</span>
+
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="notif-body notif2 ">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <a href="/annonces/{{item.id}}">
+                                        <div class="img-annonce " style="background-image:url({{item.images[0]}})">
+
+                                        </div>
+                                    </a>
+
+                                </div>
+
+
+                                <div class="annonce-details col-xs-8">
+                                    <div class="title ">
+                                        <span>{{item.name|limitTo:15}}</span>
+                                        <span ng-show="item.name.length >15">...</span>
+                                    </div>
+                                    <div class="content">
+                                        <span class="price">{{item.price}} ريال</span>
+                                        <span class="exch {{item.isExchange?'b-black':'b-white'}}">إستبدل</span>
+
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="prop">
+                            <span>
+                                {{item.content}}
+                            </span>
+
+                        </div>
+                        <div class="action">
+                            <button class="cf-purchase" data-toggle="modal" data-target="#condition" ng-click="selectItem(annonce,item)">تأكيد عملية الإستبدال</button>
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+            </div>
+            <div ng-show="tab==2" class="annonce-body row">
+
+                <div ng-show="purchases.length==0" class="center">
+                        <img src="/assets/img/robo.png"><br>
+                    <span >لا يوجد مبيعات</span>
+
+                </div>
+                <div class=" notif col-xs-12 col-sm-12 col-md-4 col-lg-4 " ng-repeat="item in purchases">
+                    <div class="notif-head">
+                        <div class="user">
+                            <img src="{{item.purchaser.avatar|| 'assets/img/user@2x.png'}}" />
+                            <div class="desc">
+                                <span class="name">{{item.purchaser.fullName}}</span>
+                            </div>
+                        </div>
+                        <div class="date">
+                            <button ng-click="cancelNotif(item,true)" class="notif-cancel">إلغاء العملية</button>
+                        </div>
+
+                    </div>
+
+                    <div class="notif-body ">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <a href="/annonces/{{item.annonce.id}}">
+                                    <div class="img-annonce " style="background-image:url({{item.annonce.images[0]}})">
+
+                                    </div>
+                                </a>
+
+                            </div>
+
+
+                            <div class="annonce-details col-xs-8">
+                                <div class="title ">
+                                    <span>{{item.annonce.name|limitTo:15}}</span>
+                                    <span ng-show="item.annonce.name.length >15">...</span>
+                                </div>
+                                <div class="content">
+                                    <span class="price">{{item.annonce.price}} ريال</span>
+                                    <span class="exch {{item.annonce.isExchange?'b-black':'b-white'}}">إستبدل</span>
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="prop">
+                        <span>
+                            تمت عملية بيع عدد {{item.quantity}} وحدة بسعر {{item.price}} ريال للوحدة يوم {{item.createdAt | formatDate : "DD MMM YYYY"
+                            }}
+                        </span>
+
+                    </div>
+                    <div class="action">
+
+
+                    </div>
+
+
+                </div>
+
+
+
+
+
+            </div>
+            <div ng-show="tab==3" class="annonce-body row">
+                <div ng-show="exchanges.length==0" class="center">
+                        <img src="/assets/img/robo.png"><br>
+                    <span >لا يوجد مبادلات</span>
+
+                </div>
+
+                <div class=" notif col-xs-12 col-sm-12 col-md-4 col-lg-4 " ng-repeat="item in exchanges">
+                    <div class="notif-head">
+                        <div class="user">
+                            <img src="{{item.purchaser.avatar|| 'assets/img/user@2x.png'}}" />
+                            <div class="desc">
+                                <span class="name">{{item.purchaser.fullName}}</span>
+                            </div>
+                        </div>
+                        <div class="date">
+                            <button ng-click="cancelNotif(item,false)" class="notif-cancel">إلغاء العملية</button>
+                        </div>
+
+                    </div>
+
+                    <div class="notif-body ">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <a href="/annonces/{{item.annonce.id}}">
+                                    <div class="img-annonce " style="background-image:url({{item.annonce.images[0]}})">
+
+                                    </div>
+                                </a>
+
+                            </div>
+
+
+                            <div class="annonce-details col-xs-8">
+                                <div class="title ">
+                                    <span>{{item.annonce.name|limitTo:15}}</span>
+                                    <span ng-show="item.annonce.name.length >15">...</span>
+                                </div>
+                                <div class="content">
+                                    <span class="price">{{item.annonce.price}} ريال</span>
+                                    <span class="exch {{item.annonce.isExchange?'b-black':'b-white'}}">إستبدل</span>
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="notif-body notif2 ">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <a href="/annonces/{{item.exchangeAnnonce.id}}">
+                                    <div class="img-annonce " style="background-image:url({{item.exchangeAnnonce.images[0]}})">
+
+                                    </div>
+                                </a>
+
+                            </div>
+
+
+                            <div class="annonce-details col-xs-8">
+                                <div class="title ">
+                                    <span>{{item.exchangeAnnonce.name|limitTo:15}}</span>
+                                    <span ng-show="item.exchangeAnnonce.name.length >15">...</span>
+                                </div>
+                                <div class="content">
+                                    <span class="price">{{item.exchangeAnnonce.price}} ريال</span>
+                                    <span class="exch {{item.exchangeAnnonce.isExchange?'b-black':'b-white'}}">إستبدل</span>
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="prop">
+                        <span>
+                            تمت عملية الإستبدال يوم {{item.createdAt | formatDate : "DD MMM YYYY" }}
+                        </span>
+
+                    </div>
+                    <div class="action">
+
+
+                    </div>
+
+
+                </div>
+
+               
+
+
+
+
+            </div>
+            <div ng-show="tab==4" class="annonce-body row">
+                <div ng-show="annoncePurchases.length==0" class="center">
+                        <img src="/assets/img/robo.png"><br>
+                    <span >لا يوجد مشتريات</span>
+
+                </div>
+                <div class=" notif col-xs-12 col-sm-12 col-md-4 col-lg-4 " ng-repeat="item in annoncePurchases">
+                        <div class="notif-head">
+                            <div class="user">
+                                <img src="{{item.author.avatar|| 'assets/img/user@2x.png'}}" />
+                                <div class="desc">
+                                    <span class="name">{{item.author.fullName}}</span>
+                                </div>
+                            </div>
+                            <div class="date">
+                                
+                            </div>
+    
+                        </div>
+    
+                        <div class="notif-body ">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <a href="/annonces/{{item.annonce.id}}">
+                                        <div class="img-annonce " style="background-image:url({{item.annonce.images[0]}})">
+    
+                                        </div>
+                                    </a>
+    
+                                </div>
+    
+    
+                                <div class="annonce-details col-xs-8">
+                                    <div class="title ">
+                                        <span>{{item.annonce.name|limitTo:15}}</span>
+                                        <span ng-show="item.annonce.name.length >15">...</span>
+                                    </div>
+                                    <div class="content">
+                                        <span class="price">{{item.annonce.price}} ريال</span>
+                                        <span class="exch {{item.annonce.isExchange?'b-black':'b-white'}}">إستبدل</span>
+    
+                                    </div>
+    
+    
+                                </div>
+    
+                            </div>
+                        </div>
+                        <div ng-show="item.exchangeAnnonce" class="notif-body notif2 ">
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <a href="/annonces/{{item.exchangeAnnonce.id}}">
+                                            <div class="img-annonce " style="background-image:url({{item.exchangeAnnonce.images[0]}})">
+    
+                                            </div>
+                                        </a>
+    
+                                    </div>
+    
+    
+                                    <div class="annonce-details col-xs-8">
+                                        <div class="title ">
+                                            <span>{{item.exchangeAnnonce.name|limitTo:15}}</span>
+                                            <span ng-show="item.exchangeAnnonce.name.length >15">...</span>
+                                        </div>
+                                        <div class="content">
+                                            <span class="price">{{item.exchangeAnnonce.price}} ريال</span>
+                                            <span class="exch {{item.exchangeAnnonce.isExchange?'b-black':'b-white'}}">إستبدل</span>
+    
+                                        </div>
+    
+    
+                                    </div>
+    
+                                </div>
+                            </div>
+                        <div class="prop">
+                            <span>
+                                    تمت عملية الشراء يوم {{item.createdAt | formatDate : "DD MMM YYYY" }}
+                            </span>
+    
+                        </div>
+                        <div class="action">
+                           
+    
+                        </div>
+    
+    
+                    </div>
+    
+                    
+                <!-- <div class=" col-xs-12 col-sm-12 col-md-6 col-lg-6" ng-repeat=" item in annoncePurchases">
+
+                    <div ng-hide="item.exchangeAnnonce" class="notification">
+                        <div class="user">
+                            <img src="{{item.vendor.avatar}}" />
+                            <div class="desc">
+                                <span class="name">{{item.vendor.fullName}}</span>
+                                </br>
+                                <span class="date">{{item.createdAt | formatDate : "YYYY/MM/DD"}}</span>
+
+                            </div>
+                        </div>
+                        <div class="comment">
+                            <img class="img-15-15" src="assets/img/verif.png" />
+                            <span class="content">تم الشراء بسعر {{item.price}} ريال</span>
+                        </div>
+                        <div class="notif-body" style="background-image:url({{item.annonce.images[0]}})">
+
+                        </div>
+
+                    </div>
+                    <div ng-show="item.exchangeAnnonce" class="notification">
+                        <div class="user">
+                            <img src="{{item.vendor.avatar}}" />
+                            <div class="desc">
+                                <span class="name">{{item.vendor.fullName}}</span>
+                                </br>
+                                <span class="date">{{item.createdAt | formatDate : "YYYY/MM/DD"}}</span>
+
+                            </div>
+                        </div>
+
+                        <div class="notif-exchange-body ">
+                            <div class="col-xs-6 ann1" style="background-image:url({{item.annonce.images[0]}})">
+                                <span>
+                                    <img class="img-30-30" src="assets/img/logo2@1x.png" />
+                                </span>
+                            </div>
+                            <div class="col-xs-6 ann2" style="background-image:url({{item.exchangeAnnonce.images[0]}})">
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div> -->
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="modal fade" id="info-credit">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-body ">
+                    <div ng-bind-html="config.transferInformation">
+
+
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <div id="paypal"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" data-backdrop="static" id="condition">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-body ">
+                    <div ng-bind-html="conditionUse">
+
+
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button data-dismiss="modal" ng-click="confirm()"> موافق</button>
+                    <button class="cancel" data-dismiss="modal">غير موافق</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+</div>

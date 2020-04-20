@@ -1,0 +1,253 @@
+<div class="content">
+    <div class="slider-content" style="height: 100px">
+
+
+
+        <img src="/assets/img/bg-title@2x.png" style="height:100%; width:100%">
+
+        <div class="categ-title">
+            <h1>{{annonce.categoryParent.name}}-{{annonce.name}}</h1>
+        </div>
+        <div class="categ-count">
+            <h1>{{annonce.category.name}} </h1>
+        </div>
+
+
+
+    </div>
+    <div class="row annonce-show">
+        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+            <div class="header-annonce ">
+                <span>{{annonce.name}}</span>
+                <div class="view">
+                    <span>{{annonce.viewCount}}</span>
+                    <img src="assets/img/viewer@2x.png">
+
+                </div>
+
+            </div>
+            <div ng-if="annonce" class="slider-content" dir="ltr">
+                <slick dots="true" infinite="true" slides-to-show="1" slides-to-scroll="1">
+
+                    <div class="carousel-item thumbnail-content" ng-repeat="item in annonce.images">
+                        <a href="{{item}}" target="_black">
+                            <div class="thumbnail" style="background-image: url({{item}})"></div>
+                        </a>
+                    </div>
+
+
+                </slick>
+            </div>
+            <div class="row">
+                <div class=" col-xs-12 col-sm-12 col-md-6 col-lg-6  ">
+                    <div class=" desc ">
+                        <div class="title">
+                            <span>تفاصيل الإعلان</span>
+                        </div>
+                        <div class="content">
+                            <span class="key">تاريخ النشر :</span>
+                            <span class="value">{{annonce.createdAt | formatDate : "YYYY/MM/DD"}}</span>
+                            </br>
+                            <span class="key">حالة السلعة :</span>
+                            <span class="value">{{annonce.status}}</span>
+                            <br>
+                            <span class="key"> الكمية المتبقية :</span>
+                            <span class="value">{{annonce.remainingQuantity||0}}</span>
+                            </br>
+                            <span class="key">الموقع الجغرافي :</span>
+                            <span class="value">{{annonce.adresse}}</span>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 ">
+                    <div class=" desc ">
+                        <div class="title">
+                            <span>وصف الإعلان</span>
+                        </div>
+                        <div class="content">
+
+                            <span class="value">{{annonce.annonceDescription}}</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="tags">
+                <div class="title">
+                    <span>الوسوم</span>
+                </div>
+                <div class="content">
+                    <span ng-repeat="item in annonce.tags">{{item}}</span>
+
+                </div>
+
+            </div>
+            <div ng-show="currentUser" class="comment-group">
+                <div class="comment-header">
+                    <span> التعليقات</span>
+                </div>
+                <div class="c-body" id="c-body">
+                    <div class="center">
+                        <span ng-show="comments.length==0">لا يوجد تعليقات</span>
+
+                    </div>
+                    <div class="comment {{item.author.id===annonce.author.id?'owner-comment':''}}" dir="{{item.author.id===annonce.author.id?'ltr':''}}"
+                        ng-repeat="item in comments">
+                        <img class="avatar " src="{{item.author.avatar||'assets/img/user@2x.png'}}" />
+                       <a href="/profile/{{item.author.id}}"><span class="name">{{item.author.fullName}}</span></a> 
+                        <span class="date">{{item.createdAt | formatDate :'YYYY/MM/DD hh:mm'}}</span>
+                        <br>
+
+                        <span class="content">
+                            <img ng-show="item.productPurchase" class=" img-20-20" src="assets/img/verif.png" /> {{item.content}}</span>
+                    </div>
+                </div>
+                <div class="comment-footer">
+                    <img ng-show="currentUser.objectId != annonce.author.id" data-toggle="modal" ng-click="purchasePrice=null" data-target="#purchase"
+                        class=" img-30-30" src="assets/img/verif.png" />
+                    <input type="text" ng-model="comment">
+                    <img ng-click="addComment(true,comment)" class="img-30-30" src="assets/img/send@2x.png" />
+
+
+                </div>
+
+            </div>
+            <div class="modal fade" id="purchase">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title"></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <span>تحديد سعر شراء الوحدة</span>
+                                <input type="number" ng-model="purchasePrice">
+                                <span style="color:#000">ريال</span>
+                            </div>
+                            <div style="margin-top:15px">
+                                <span>الكمية &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </span>
+                                <input type="number" ng-change="quantityChange()" ng-model="purchaseQuantity">
+                            </div>
+                            <div style="margin-top:15px">
+                                <span>السعر الإجمالي &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </span>
+                                <input type="text" value="{{purchaseQuantity * purchasePrice}}" readonly>
+                                <span style="color:#000">ريال</span>
+                            </div>
+
+
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <div style="text-align:center;margin-top:15px">
+
+                                <button ng-disabled="!purchasePrice" data-dismiss="modal" ng-click="addComment()" class="btn btn-default">
+                                    <img class=" img-30-30" src="assets/img/verif.png" /> عرض</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+            <div class="price ">
+                <span> {{annonce.price}} ريال</span>
+            </div>
+
+            <div ng-show="annonce.isExchange && currentUser && (currentUser.objectId != annonce.author.id) " class="exchange price" data-toggle="modal"
+                ng-click="exchangeAnnonce=null" data-target="#owner-annonces">
+                <span> إستبدل</span>
+            </div>
+            <div ng-show="(annonce.isExchange && !currentUser) || (currentUser.objectId == annonce.author.id)" class="exchange price">
+                <span> إستبدل</span>
+            </div>
+            <div ng-show="!annonce.isExchange" class="exchange ">
+                <span> إستبدل</span>
+            </div>
+            <div class="location">
+                <ng-map center="{{annonce.location.latitude+','+annonce.location.longitude}}" zoom="15" style="height:200px;">
+
+                    <marker position="{{annonce.location.latitude+','+annonce.location.longitude}}"></marker>
+                </ng-map>
+            </div>
+            <div class="author">
+                <img src="{{annonce.author.avatar ||'assets/img/user@2x.png'}}" />
+                <div class="content">
+                        <a href="/profile/{{annonce.author.id}}"><span class="name">{{annonce.author.fullName}}</span></a>
+                    </br>
+                    <span class="address">{{annonce.author.adresse}}</span>
+
+                </div>
+
+            </div>
+            <div ng-click="showNumber=true" class="price ">
+                <img class="img-20-20" src="assets/img/telephone@2x.png" />&nbsp;
+                <span ng-hide="showNumber">إظهار رقم الهاتف</span>
+                <span ng-show="showNumber" dir="ltr">{{annonce.author.username}}</span>
+            </div>
+            <div ng-show="currentUser && (currentUser.objectId != annonce.author.id)" class="send " data-toggle="modal" ng-click="purchasePrice=null"
+                data-target="#purchase">
+                <img class="img-30-30" src="assets/img/send@2x.png" />&nbsp;
+                <span>تقديم عرض</span>
+            </div>
+            <div class="modal fade" id="owner-annonces">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">إختر إعلان للاستبدال</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -25px;">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body ">
+                            <div class="annonce-body row">
+                                <div class="center">
+                                    <span ng-show="annonces.length==0">لا يوجد إعلانات</span>
+                                    <a target="_self" ng-show="currentUser" href="annonces/edit/new">
+                                        <button class="red">
+                                            <img class="img-15-15" src="assets/img/add@2x.png" /> &nbsp;&nbsp;أضف إعلانك
+
+                                        </button>
+                                    </a>
+                                </div>
+
+                                <div class=" col-xs-6" ng-repeat=" item in annonces">
+                                    <a ng-click="addExchange(item)" data-dismiss="modal">
+                                        <div class="annonce" style="background-image:url({{item.images[0]}});margin: 15px 0;height:350px;">
+
+                                            <button class="pricee ">{{item.price}} ريال</button>
+
+
+
+
+                                        </div>
+                                    </a>
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+        </div>
+
+    </div>
+
+
+
+</div>

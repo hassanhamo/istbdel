@@ -1,0 +1,188 @@
+
+<div class="content">
+    <div class="slider-content" style="height: 100px">
+
+
+
+        <img src="/assets/img/bg-title@2x.png" style="height:100%; width:100%">
+
+        <div class="categ-title">
+            <h1>{{parent.name}}</h1>
+        </div>
+        <div class="categ-count">
+            <h1>{{parent.annonceCount}} إعلان</h1>
+        </div>
+
+
+
+    </div>
+    <div class="row categ-show">
+        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+            <div class="header-annonce ">
+                <span>{{title||'كل الإعلانات'}}</span>
+                <div class="view">
+                    <span>طريقة العرض:</span>
+                    <img ng-click="grid=false" src="assets/img/list@2x.png">
+                    <img ng-click="grid=true" src="assets/img/grid@2x.png">
+                </div>
+
+            </div>
+            <div ng-show="annonces.length==0" class="center">
+                    <img src="/assets/img/robo.png"><br>
+                <span >لا يوجد إعلانات</span>
+    
+            </div>
+            <div ng-show="!grid" class="body-annonce " ng-repeat="item in annonces">
+                <a href="annonces/{{item.id}}">
+                    <div class="annonce col-xs-4" style="background-image:url({{item.images[0]}})">
+
+                    </div>
+                </a>
+                <div class="annonce-content">
+                    <div class="top ">
+                    <div class="name ">
+                        <img src="{{parent.icon}}">
+                        <span>{{item.name}}</span>
+                        </div>
+                        <div class="date ">
+                            <img src="assets/img/time@2x.png">
+                            <span>{{item.createdAt | formatDate : "YYYY/MM/DD"}}</span>
+
+                        </div>
+
+                    </div>
+                    <div class="desc">
+                        {{item.annonceDescription}}
+
+
+                    </div>
+                    <div class="bottom">
+                        <span>{{item.price}} ريال</span>
+                        <span class="exch {{item.isExchange?'b-black':'b-white'}}">إستبدل</span>
+                        <button class="like {{isLike(item)}} " ng-click="like(item)">
+                            <i class="fa fa-heart-o"></i>
+                        </button>
+                        <div class="view">
+
+                            <span>{{item.viewCount }}</span>
+                            <img src="assets/img/viewer@2x.png">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div ng-show="grid" class="annonce-groupe" style="margin:30px 0;">
+
+                <div class="annonce-body row">
+                    <div class=" col-xs-12 col-sm-12 col-md-4 col-lg-4" ng-repeat=" item in annonces">
+
+                        <div class="annonce" style="background-image:url({{item.images[0]}});margin: 15px 0;height:350px;">
+                            <button class="like {{isLike(item)}} " ng-click="like(item)">
+                                <i class="fa fa-heart-o"></i>
+                            </button>
+                            <button class="price ">{{item.price}} ريال</button>
+
+                            <a href="annonces/{{item.id}}">
+                                <div style="width:100%; height:100%;"></div>
+                            </a>
+
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+            <kr-pager page="filters.page" page-size="filters.pageSize"></kr-pager>
+
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+            <div class="category ">
+                <div class="header" style="width:100%;">
+                    <img class=" img-20-20" src="assets/img/menu@2x.png">
+                    <span class="title"> جميع الفئات</span>
+
+                </div>
+                <div class="categ-body">
+                    <div ng-repeat="categ in categories" style="width:100%;">
+                        <a href="categories/{{categ.id}}">
+                            <img class="img-sm" src="{{categ.icon}}">
+                            <span> {{categ.name}}</span>
+                        </a>
+                    </div>
+
+
+                </div>
+                <div class="categ-footer" style="width:100%;">
+
+                </div>
+
+
+            </div>
+            <div class="categ-childs">
+                <span>الأقسام الفرعية</span>
+                <div ng-if="categoriesChilds" class="slider-content" dir="ltr">
+                    <slick infinite="true" slides-to-show="3" slides-to-scroll="3">
+
+                        <div class="carousel-item" ng-repeat="item in categoriesChilds">
+                            <div ng-click="changeParent(item)" class="child" style="background-image: url({{item.thumbnail ||'assets/img/logo2@1x.png'}})"></div>
+                        </div>
+
+
+                    </slick>
+                </div>
+
+            </div>
+            <div class="add-annonce">
+                <div class="title">
+                    <img src="assets/img/time@2x.png">
+                    <span> أضف إعلان في دقيقة !</span>
+                </div>
+               
+                <a ng-show="currentUser" href="annonces/edit/new">  <button  class="red">
+                        <img class="img-20-20" src="assets/img/add@2x.png" /> &nbsp;&nbsp;أضف إعلانك
+            
+                    </button></a>
+                    <a ng-hide="currentUser" href="/account/login" target="_self">   <button  class="red">
+                        <img class="img-20-20" src="assets/img/add@2x.png" /> &nbsp;&nbsp;أضف إعلانك
+            
+                    </button></a>
+
+            </div>
+            <div class="fav-annonce">
+                <div class="title">
+
+                    <span>الإعلانات المميزة</span>
+                </div>
+                <div class="body ">
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" ng-repeat="annonce in favAnnonces">
+                        <div class="annonce" style="background-image:url({{annonce.images[0]}})">
+                            <button class="like {{isLike(annonce)}} " ng-click="like(annonce)">
+                                <i class="fa fa-heart-o"></i>
+                            </button>
+                            <button class="price " style="bottom:30px;">{{annonce.price}} ريال</button>
+                            <a href="annonces/{{annonce.id}}">
+                                <div style="width:100%; height:100%;"></div>
+                            </a>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+</div>

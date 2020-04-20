@@ -1,0 +1,71 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="card" block-ui="card">
+            <div class="card-header">
+                <h4 class="card-title">التجار</h4>
+                <div class="heading-elements">
+                </div>
+            </div>
+            <div class="card-body collapse in">
+                <div class="card-block">
+                    <div class="row" style="margin-bottom:10px;">
+                        <div class="col-xs-6">
+                            <input type="text" class="form-control" placeholder="ابحث..." ng-model="search" ng-model-options="{debounce:1000}" />
+                        </div>
+                        <div class="col-xs-6">
+                            <div page-size-options></div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table mb-0">
+                            <thead>
+                                <tr>
+                                    <th style="width:85px"></th>
+                                    <th>الاسم</th>
+                                    <th>الهاتف</th>
+                                    <th>تاريخ التسجيل</th>
+                                    <th>حالة التسجيل</th>
+                                    <th style="width:300px"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-show="!items">
+                                    <td colspan="6">
+                                        <ajax-loader></ajax-loader>
+                                    </td>
+                                </tr>
+                                <tr ng-repeat="item in items" id="item-{{item.objectId}}" block-ui="row[item.objectId]">
+                                    <td>
+                                        <div class="img-thumbnail" style="min-height: 65px;">
+                                            <img ng-src="{{item.avatar}}" />
+                                        </div>
+                                    </td>
+                                    <td ng-bind="item.name">
+                                    </td>
+                                    <td ng-bind="item.username">
+                                    </td>
+                                    <td ng-bind="item.subscriptionDate.iso | moment:'fromNow'" title="{{item.subscriptionDate.iso | moment:'format':'FullTime'}}">
+                                    </td>
+                                    <td>
+                                        <span class="badge" ng-bind="item.account_state === 0 ? 'غير مفعّل':'مفعّل'"></span>
+                                    </td>
+                                    <td style="text-align: left">
+                                        <div class="table-actions">
+                                            <button class="btn btn-success" ng-click="activate(item)" ng-disabled="activating[item.objectId]" ng-hide="item.account_state"><i class="icon-check"></i> تفعيل</button>
+                                            <a class="btn btn-info" ng-click="select(item)" href="/dealers/{{item.objectId}}"><i class="icon-eye"></i> عرض</a>
+                                            <button class="btn btn-danger" delete-btn="item" container-id="#item-{{item.objectId}}"><i class="icon-cancel-circle"></i> حذف</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <pager page="filters.page" page-size="filters.pageSize"></pager>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,27 @@
+<div class="card profile-card-with-cover border-grey border-lighten-2">
+    <div class="ribbon" ng-if="level">{{level}}</div>
+    <div class="card-img-top img-fluid bg-cover height-200" style="background-position: 100%" ng-style="{'background-color':'#f1f1f1', 'background-image':'url(' + announcement.photo[0].url + ')'}"></div>
+    <div class="card-profile-image">
+        <img ng-src="{{announcement.dealer.avatar}}" ng-if="announcement.dealer.avatar" class="rounded-circle img-border" alt="{{announcement.dealer.name}}" style="max-width:120px;height:120px;"
+        />
+        <div ng-if="!announcement.dealer.avatar" class="rounded-circle img-border" alt="{{announcement.dealer.name}}" style="min-width:120px;max-width:120px;height:120px;background:#f96332;margin:0 auto;"></div>
+    </div>
+    <div class="profile-card-with-cover-content text-xs-center">
+        <div class="small-gallery">
+            <div class="img-thumbnail" ng-repeat="pic in announcement.photo">
+                <a href="{{pic.url}}" data-toggle="lightbox" data-gallery="gallery-{{announcement.objectId}}">
+                    <img ng-src="{{pic.url}}" style="width:50px;" />
+                </a>
+            </div>
+        </div>
+        <div class="card-block">
+            <h4 class="card-title">{{announcement.title}}</h4>
+            <p class="text-muted m-0">{{announcement.Description}}</p>
+        </div>
+
+        <div class="btn-group" role="group" ng-if="earnings">
+            <button type="button" class="btn btn-float box-shadow-0 btn-outline-info"><span class="ladda-label"><i class="icon-dollar"></i><span>{{earnings}}</span></span><span class="ladda-spinner"></span></button>
+            <button type="button" class="btn btn-float box-shadow-0 btn-outline-info"><span class="ladda-label"><i class="icon-spoon"></i><span>{{ordersCount}}</span></span><span class="ladda-spinner"></span></button>
+        </div>
+    </div>
+</div>

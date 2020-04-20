@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="loading" ng-app="istibdel">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description" content="annonce anouncement بيع شراء">
+    <meta name="keywords" content="annonce anouncement بيع شراء">
+    <meta name="author" content="Emhemdi">
+    <title>إستبدل</title>
+    <base href="/" />
+    <link rel="apple-touch-icon" sizes="60x60" href="/assets/img/logo2@1x.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/logo2@1x.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/assets/img/logo2@1x.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/assets/img/logo2@1x.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/img/logo2@1x.png">
+    <link rel="shortcut icon" type="image/png" href="/assets/img/logo2@1x.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <!-- BEGIN VENDOR CSS-->
+
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/css-rtl/bootstrap.css">
+    <!-- /build-->
+    <!-- BEGIN VENDOR CSS-->
+    <!-- BEGIN Font icons-->
+    <link rel="stylesheet" type="text/css" href="/assets/fonts/font-awesome/font-awesome.css">
+    <!-- <link rel="stylesheet" type="text/css" href="/assets/template/fonts/flag-icon-css/css/flag-icon.min.css"> -->
+    <!-- END Font icons-->
+    <!-- BEGIN Plugins CSS-->
+    <!--  <link rel="stylesheet" type="text/css" href="/assets/template/css/plugins/sliders/slick/slick.css"> -->
+    <!-- END Plugins CSS-->
+    <!-- BEGIN Vendor CSS-->
+
+    <!-- END Vendor CSS-->
+    <!-- BEGIN ROBUST CSS-->
+    <!-- build:css robust-assets/css/app.min.css-->
+
+    <link rel="stylesheet" type="text/css" href="/assets/plugins/sweetalert/sweetalert.css">
+
+    <!-- <link rel="stylesheet" type="text/css" href="/assets/template/css/plugins/charts/morris.css"> -->
+    <link rel="stylesheet" href="/assets/plugins/slick-carousel/slick/slick.css">
+    <link rel="stylesheet" href="/assets/plugins/slick-carousel/slick/slick-theme.css">
+
+    <!-- /build-->
+    <!-- END ROBUST CSS-->
+    <!-- BEGIN Page Level CSS-->
+    <!-- END Page Level CSS-->
+    <!-- BEGIN Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="/assets/css/istibdel.css">
+
+    <%- include("../scripts") -%>
+
+
+
+</head>
+
+<body class="body-login" ng-app="istibdel" ng-controller="LoginController">
+    <div class="login">
+        <div class="logo">
+            <a href="/" target="_self">
+                <img src="assets/img/logo@2x.png">
+            </a>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <span> تسجيل الدخول</span>
+                <br>
+
+                <input type="number"  placeholder="رقم الهاتف" ng-model="usernameLogin" style="border-top-left-radius: 0;border-bottom-left-radius: 0;"
+                />
+                <span class=" dropdown">
+                    <button class="country dropdown-toggle" type="button" data-toggle="dropdown">
+                        <img src="assets/img/flags/{{country.code.toLowerCase()}}.png">
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li ng-repeat="item in countries" ng-click="countryChange(item)">
+                            <img class="img-30-20" src="assets/img/flags/{{item.code.toLowerCase()}}.png">&nbsp;&nbsp;
+                            <span>{{item.name_ar}}</span>
+                        </li>
+
+                    </ul>
+                </span>
+
+                <br>
+               <!-- <input type="password" placeholder="كلمة المرور" ng-model="loginDetails.password" />
+                <br>-->
+
+                <button ng-disabled=" (usernameLogin <0)" ng-click="verifCodeLogin()" >تسجيل الدخول</button><br>
+                 <div style="margin: 15px 35px;" id="phone-sign-in-recaptcha1"></div>
+                <span class="bar-v"></span>
+                <span class="or">أو</span>
+                <br>
+                <span class="c-red">{{error}}</span>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <span> سجل الآن</span>
+                <br>
+                <input type="number"  placeholder="رقم الهاتف" ng-model="phoneNumber" style="border-top-left-radius: 0;border-bottom-left-radius: 0;"
+                />
+                <span class=" dropdown">
+                    <button class="country dropdown-toggle" type="button" data-toggle="dropdown">
+                        <img src="assets/img/flags/{{country.code.toLowerCase()}}.png">
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li ng-repeat="item in countries" ng-click="countryChange(item)">
+                            <img class="img-30-20" src="assets/img/flags/{{item.code.toLowerCase()}}.png">&nbsp;&nbsp;
+                            <span>{{item.name_ar}}</span>
+                        </li>
+
+                    </ul>
+                </span>
+                <input type="text"  placeholder="الإسم" ng-model="fullName" maxlength="15" 
+                />
+                <br>
+                <div ng-show="  (phoneNumber >0 && fullName)" class="term">
+                    <span data-toggle="modal" data-target="#condition">
+                        <i class="fa fa-check-circle"></i>عند الإشتراك أوافق على شروط الخدمة</span>
+                </div>
+                <button ng-disabled="!agree" ng-click="verifCode()" >الحصول على الكود</button><br>
+                <span class="c-red">{{error1}}</span>
+                <div style="margin: 15px 35px;" id="phone-sign-up-recaptcha"></div>
+                <!-- <span class="c-red">التسجيل مغلق وقتيا</span> -->
+
+            </div>
+        </div>
+        <div class="modal fade" data-backdrop="static" id="condition">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-body ">
+                        <div ng-bind-html="conditionUse">
+
+
+
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" ng-click="agree=true"> موافق</button>
+                        <button class="cancel" data-dismiss="modal">غير موافق</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="verif-code" kr-modal="verif">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-body ">
+
+                        <input type="number" oninput="if(this.value.length>6){this.value = this.value.slice(0,6);};" name="" ng-model="code1" placeholder="أدخل الكود">
+                        <br>
+                        <span class="c-red">{{verifError}}</span>
+                        <br>
+
+                         
+
+                        <button data-dismiss="modal" ng-click="singUp()"> تسجيل</button>
+
+                    </div>
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="verif-code-login" kr-modal="verifLogin">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-body ">
+
+                        <input type="text" name="" oninput="if(this.value.length>6){this.value = this.value.slice(0,6);};" ng-model="code" placeholder="أدخل الرمز">
+                        <br>
+                        <span class="c-red">{{verifError}}</span>
+                        <br>
+
+                        
+
+                        <button data-dismiss="modal" ng-click="login()"> تأكيد الرمز</button>
+
+                    </div>
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</body>
+
+</html>
