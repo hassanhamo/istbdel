@@ -13,7 +13,7 @@ var cookieSession = require('cookie-session');
 //Parse.initialize('WCfqomGyScI1LUCLmZe83XuXKCyVzdLz', '', 'eB0pJR3f1SGFuFLzHmtOi8MfOVipsEd8');
 //Parse.serverURL = 'https://istibdel.parse-server.karizma1.com/parse';
 Parse.initialize('mAz3zGoYW2uJ6nR9kCLWhvQI4UEvKlFjFIvNywIV', '', 'cd2GakYAV7oH0xIFaraUHe22DghK7QhDlIovuUCq');
-Parse.serverURL = 'https://161.35.1.1:1337/parse';
+Parse.serverURL = 'https://161.35.1.1/parse';
 Parse.Cloud.useMasterKey();
 
 var app = express();
